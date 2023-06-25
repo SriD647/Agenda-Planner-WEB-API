@@ -1,7 +1,9 @@
 require('dotenv').config()
 const User = require('../models/user')
+const AgendaItem = require('../models/agendaItem')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { deleteOne } = require('../models/agendaItem')
 
 
 exports.auth = async (req, res, next) => {//authorizing the user
@@ -48,16 +50,13 @@ exports.loginUser = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id });
-    const { name, agendaItems } = user; // Extracting only the desired keys
-    const response = { name, agendaItems }; // Creating a new object with the extracted keys
-    res.json(response);
+  try { 
+    const user = await User.findOne({ _id: req.params.id })
+      res.json(user) 
   } catch (error) {
-    res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message })
   }
 }
-
 
 exports.updateUser = async (req, res) => {
     try {
@@ -85,10 +84,10 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
       if(req.user.isLoggedIn){
-      await req.user.deleteOne()
-      res.sendStatus(204)
-  }
-      else{
+      await AgendaItem.deleteMany({ user: req.user._id });  
+      await req.user.deleteOne()      
+      res.status(204).json({message: 'User successfully deleted'})
+  }else {
           res.status(401).json({message:'Log back in!'})
       }
     } catch (error) {

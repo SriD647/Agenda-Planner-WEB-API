@@ -23,13 +23,21 @@ exports.getAgendaItem = async function (req, res){
     }
 }
 
-exports.getEntireAgenda = async function (req, res) {
+exports.getEntireAgenda = async (req, res) => {
     try {
-      const agendaItems = await AgendaItem.find({ user: req.user._id });
-      console.log(agendaItems);
-      res.json(agendaItems);
+    const agendaItems = await AgendaItem.find({ user: req.params.id})
+    res.json(agendaItems)
+
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   }
   
+  exports.updateAgendaItem = async function(req, res){
+    try{
+        const agendaItem = await AgendaItem.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+        res.json(agendaItem)
+    } catch(error){
+        res.status(400).json({ message: error.message })
+    }
+}
