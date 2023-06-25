@@ -6,6 +6,8 @@ const userController = require('../controllers/userController')
 
 // Create agendaItem
 router.post('/', userController.auth, agendaItemsController.create)
+router.get('/:id',userController.auth, agendaItemsController.getAgendaItem)
+router.get('/',userController.auth, agendaItemsController.getEntireAgenda)
 
 
 module.exports = router 

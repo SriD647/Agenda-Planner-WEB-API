@@ -48,13 +48,16 @@ exports.loginUser = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-  try { 
-    const user = await User.findOne({ _id: req.params.id })
-      res.json(user) 
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    const { name, agendaItems } = user; // Extracting only the desired keys
+    const response = { name, agendaItems }; // Creating a new object with the extracted keys
+    res.json(response);
   } catch (error) {
-      res.status(400).json({ message: error.message })
+    res.status(400).json({ message: error.message });
   }
 }
+
 
 exports.updateUser = async (req, res) => {
     try {
