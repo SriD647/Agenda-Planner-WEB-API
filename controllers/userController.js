@@ -24,11 +24,10 @@ exports.auth = async (req, res, next) => {//authorizing the user
 exports.createUser = async (req, res) => {
   try {
     const user = new User(req.body)
+    const token = await user.generateAuthToken()
     user.isLoggedIn = false
     await user.save()
-    const token = await user.generateAuthToken()
     res.json({ user, token})
-    
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -86,7 +85,7 @@ exports.deleteUser = async (req, res) => {
       if(req.user.isLoggedIn){
       await AgendaItem.deleteMany({ user: req.user._id });  
       await req.user.deleteOne()      
-      res.status(204).json({message: 'User successfully deleted'})
+      res.status(200).json({message: 'User successfully deleted'})
   }else {
           res.status(401).json({message:'Log back in!'})
       }
