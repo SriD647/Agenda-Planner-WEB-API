@@ -9,6 +9,6 @@ router.post('/new', userController.auth, agendaItemsController.create)
 router.get('/:id',userController.auth, agendaItemsController.getAgendaItem)
 router.get('/entireAgenda/:id',userController.auth, agendaItemsController.getEntireAgenda)
 router.put('/:id',userController.auth, agendaItemsController.updateAgendaItem)
-
+router.delete('/:id', userController.auth, agendaItemsController.deleteAgendaItem)
 
 module.exports = router 
