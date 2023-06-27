@@ -3,13 +3,17 @@ const User = require('../models/user')
 
 exports.createAgendaItem = async function (req, res){
     try {
-      if (req.user.isLoggedIn) {
+      if (req.user.isLoggedIn) { 
       req.body.user = req.user._id
+      if (await AgendaItem.findOne({date: req.body.date, startTime: req.body.startTime, finishTime: req.body.finishTime})) {
+        res.status(401).json({message:'An agenda item with this date, start time, and finish time already exists!'})
+      } else {
       const agendaItem = await AgendaItem.create(req.body)
       req.user.agendaItems.addToSet(agendaItem._id )
       console.log(req.user)
       await req.user.save()
       res.json(agendaItem)
+      }
       } else {
         res.status(401).json({message:'Log back in!'})
     }
@@ -47,8 +51,12 @@ exports.getEntireAgenda = async (req, res) => {
   exports.updateAgendaItem = async function(req, res){
     try{
         if (req.user.isLoggedIn) {
+          if (await AgendaItem.findOne({date: req.body.date, startTime: req.body.startTime, finishTime: req.body.finishTime})){
+            res.status(401).json({message:'An agenda item with this date, start time, and finish time already exists!'})
+          } else {
         const agendaItem = await AgendaItem.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
         res.json(agendaItem)
+          }
     }  else {
         res.status(401).json({message:'Log back in!'})
     }
