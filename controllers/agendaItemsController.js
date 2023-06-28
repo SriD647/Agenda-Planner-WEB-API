@@ -1,39 +1,54 @@
-const AgendaItem = require('../models/agendaItem')
-const User = require('../models/user')
+const AgendaItem = require('../models/agendaItem');
+const User = require('../models/user');
+const moment = require('moment');
 
-exports.createAgendaItem = async function (req, res){
-    try {
-      if (req.user.isLoggedIn) { 
-      req.body.user = req.user._id
-      if (await AgendaItem.findOne({date: req.body.date, startTime: req.body.startTime, finishTime: req.body.finishTime})) {
-        res.status(401).json({message:'An agenda item with this date, start time, and finish time already exists!'})
+
+exports.createAgendaItem = async function (req, res) {
+  try {
+    if (req.user.isLoggedIn) {
+      req.body.user = req.user._id;
+      req.body.dateAndStartTime = moment(req.body.dateAndStartTime).format('YYYY-MM-DD HH:mm');
+      req.body.dateAndEndTime = moment(req.body.dateAndEndTime).format('YYYY-MM-DD HH:mm')
+      
+      if (
+        await AgendaItem.findOne({
+          dateAndStartTime: req.body.dateAndStartTime,
+          dateAndEndTime: req.body.dateAndEndTime,
+        })
+      ) {
+        res.status(401).json({
+          message: 'An agenda item with this date, start time, and finish time already exists!'
+        });
       } else {
-      const agendaItem = await AgendaItem.create(req.body)
-      req.user.agendaItems.addToSet(agendaItem._id )
-      console.log(req.user)
-      await req.user.save()
-      res.json(agendaItem)
+      
+        const agendaItem = await AgendaItem.create(req.body);
+        req.user.agendaItems.addToSet(agendaItem._id);
+        await req.user.save();
+        res.json(agendaItem);
       }
-      } else {
-        res.status(401).json({message:'Log back in!'})
+    } else {
+      res.status(401).json({ message: 'Log back in!' });
     }
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
-}
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 exports.getAgendaItem = async function (req, res){
-    try{
-        if (req.user.isLoggedIn) {
-        const agendaItem = await AgendaItem.findOne({ _id: req.params.id })
-        res.json(agendaItem)
-    }else {
-        res.status(401).json({message:'Log back in!'})
-    }
-    } catch(error){
-        res.status(400).json({ message: error.message })
-    }
+  try{
+      if (req.user.isLoggedIn) {
+      const agendaItem = await AgendaItem.findOne({ _id: req.params.id })
+      res.json(agendaItem)
+  }else {
+      res.status(401).json({message:'Log back in!'})
+  }
+  } catch(error){
+      res.status(400).json({ message: error.message })
+  }
 }
+
+
+
 
 exports.getEntireAgenda = async (req, res) => {
   try {
