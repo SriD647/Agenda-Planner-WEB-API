@@ -7,20 +7,13 @@ exports.createAgendaItem = async function (req, res) {
   try {
     if (req.user.isLoggedIn) {
       req.body.user = req.user._id;
-      req.body.dateAndStartTime = moment(req.body.dateAndStartTime).format('YYYY-MM-DD HH:mm');
-      req.body.dateAndEndTime = moment(req.body.dateAndEndTime).format('YYYY-MM-DD HH:mm')
-      
-      if (
-        await AgendaItem.findOne({
-          dateAndStartTime: req.body.dateAndStartTime,
-          dateAndEndTime: req.body.dateAndEndTime,
-        })
-      ) {
+      if (await AgendaItem.findOne({startDate: req.body.startDate, endDate: req.body.endDate, startTime: req.body.startTime, endTime: req.body.endTime })) 
+      {
         res.status(401).json({
           message: 'An agenda item with this date, start time, and finish time already exists!'
         });
       } else {
-      
+
         const agendaItem = await AgendaItem.create(req.body);
         req.user.agendaItems.addToSet(agendaItem._id);
         await req.user.save();
@@ -33,6 +26,7 @@ exports.createAgendaItem = async function (req, res) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 exports.getAgendaItem = async function (req, res){
   try{
@@ -48,8 +42,6 @@ exports.getAgendaItem = async function (req, res){
 }
 
 
-
-
 exports.getEntireAgenda = async (req, res) => {
   try {
       if (req.user.isLoggedIn) {
@@ -62,11 +54,41 @@ exports.getEntireAgenda = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 }
-  
+
+exports.getAgendaItemsByDate = async function (req, res) {
+  try{
+    if (req.user.isLoggedIn) {
+      const agendaItems = await AgendaItem.find({ startDate: req.params.id})
+      res.json(agendaItems)
+  } else {
+      res.status(401).json({message:'Log back in!'})
+  }
+    
+  }
+  catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+// exports.getWeeklyAgendaItems = async function (req, res) {
+//   try{
+//     if (req.user.isLoggedIn) {
+//       const agendaItems = await AgendaItem.find({ startDate: req.params.id})
+//       res.json(agendaItems)
+//   } else {
+//       res.status(401).json({message:'Log back in!'})
+//   }
+    
+//   }
+//   catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// }
+
   exports.updateAgendaItem = async function(req, res){
     try{
         if (req.user.isLoggedIn) {
-          if (await AgendaItem.findOne({date: req.body.date, startTime: req.body.startTime, finishTime: req.body.finishTime})){
+          if (await AgendaItem.findOne({startDate: req.body.startDate, endDate: req.body.endDate, startTime: req.body.startTime, endTime: req.body.endTime })){
             res.status(401).json({message:'An agenda item with this date, start time, and finish time already exists!'})
           } else {
         const agendaItem = await AgendaItem.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
@@ -95,4 +117,22 @@ exports.deleteAgendaItem = async function(req, res) {
     } catch(error) {
         res.status(400).json({message: error.message})
     }
+}
+
+exports.deleteAllAgendaItems = async function(req, res) {
+  try {
+      if (req.user.isLoggedIn) {
+          await AgendaItem.deleteMany({ user: req.user._id})
+          while (req.user.agendaItems.length > 0) {
+            req.user.agendaItems.pop();
+          }
+          await req.user.save()      
+          res.status(200).json({message: 'All agenda items associated with user sucessfully deleted'})
+
+      } else {
+          res.status(401).json({message: error.message})
+      }
+  } catch(error) {
+      res.status(400).json({message: error.message})
+  }
 }
