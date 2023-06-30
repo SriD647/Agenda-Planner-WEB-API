@@ -28,7 +28,7 @@ exports.createUser = async (req, res) => {
     await user.save()
     res.json({user})
   } catch (error) {
-    res.status(400).json({ message: error.message })
+    res.status(400).json({message: "A required credential is invalid!"} )
   }
 }
 
@@ -82,7 +82,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
       if(req.user.isLoggedIn){
-      await AgendaItem.deleteMany({ user: req.user._id });  
+      await AgendaItem.deleteMany({ user: req.params._id });  
       await req.user.deleteOne()      
       res.status(200).json({message: 'User successfully deleted'})
   }else {
