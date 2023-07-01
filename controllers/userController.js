@@ -52,7 +52,7 @@ exports.getUser = async (req, res) => {
     const user = await User.findOne({ _id: req.params.id })
       res.json(user) 
   } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: "User not found!" })
   }
 }
 
@@ -62,17 +62,15 @@ exports.updateUser = async (req, res) => {
             const updates = Object.keys(req.body)
             const user = await User.findOne({ _id: req.params.id })
             if (!user) {
-                throw new Error('User not found')
+              throw new Error('User not found')
             }
             if (user.isLoggedIn) {
                 updates.forEach(update => user[update] = req.body[update])
                 await user.save()
                 res.json(user)
             } else {
-                res.status(401).json({ message: 'Log back in!' })
+                res.status(400).json({ message: 'Log back in!' })
             }
-        } else {
-            res.status(401).json({ message: 'Log back in!' })
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -86,10 +84,10 @@ exports.deleteUser = async (req, res) => {
       await req.user.deleteOne()      
       res.status(200).json({message: 'User successfully deleted'})
   }else {
-          res.status(401).json({message:'Log back in!'})
+    res.status(400).json({ message: "Log back in!" })
       }
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(401).json({ message: error.message })
     }
   }
 

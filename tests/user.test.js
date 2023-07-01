@@ -51,7 +51,7 @@ describe('Test the users endpoints- Positive cases', () => {
     })
 
     test("It should get specific user", async ()=>{
-        const user = new User({ name: 'Ethan Hunt' , email: 'e.hunt@example.com', password: '123' })
+        const user = new User({ name: 'Ethan Hunt' , email: 'e.hunt@example.com', password: '123', isLoggedIn: true || false })
         await user.save()
         
         const response =  await request(app).get(`/users/${user._id}`)
@@ -59,13 +59,13 @@ describe('Test the users endpoints- Positive cases', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.name).toEqual('Ethan Hunt')
         expect(response.body.email).toEqual('e.hunt@example.com')
-        // expect(response.body).toHaveProperty('isLoggedIn') 
+        expect(response.body.isLoggedIn).toEqual(true || false) 
         expect(response.body).toHaveProperty('password')
         expect(response.body).toHaveProperty('agendaItems')
         
     })
     test('It should update a user', async () => {
-        const user = new User({ name: 'Joe Schmo', email: 'j.schmo@example.com', password: '123' })
+        const user = new User({ name: 'Joe Schmo', email: 'j.schmo@example.com', password: '123'})
         await user.save()
         const token = await user.generateAuthToken()
 
@@ -113,15 +113,78 @@ describe('Test the users endpoints- Negative cases', () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toEqual("A required credential is invalid!");
     })
-    test('Negative case of a user tring to login with invalid credentials', async () => {
+    test('Negative case of a user trying to login with invalid credentials', async () => {
         const user = new User({ name: 'Homer Simpson' , email: 'h.simpson@example.com', password: '123' })
         await user.save()
         const response = await request(app)
             .post('/users/login')
-            .send({ email: "lisa.simpson@gmail.com", password: 'abcd' })
+            .send({ email: "h.simpson@gmail.com", password: 'abcd' })
 
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toEqual("Invalid Login Credentials");    
 
+    })
+
+    test("Negative case of getting a user when :id is invalid", async ()=>{
+        const user = new User({ name: 'Evelyn Salt' , email: 'e.salt@example.com', password: '123' })
+        await user.save()
+        
+        const response =  await request(app).get(`/users/somethingincorect`)
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toEqual("User not found!")
+    })
+    test('Negative case of updating user when :id is invalid', async () => {
+        const user = new User({ name: 'James Bond', email: 'j.bond@example.com', password: '123' })
+        await user.save()
+        const token = await user.generateAuthToken()
+
+        const response = await request(app)
+            .put(`/users/somethingwrong`)
+            .set('Authorization', `Bearer ${token}`)
+            .send({ name: 'John Lennon', email: 'j.lennon@example.com' })
+
+        expect(response.statusCode).toBe(400)
+        // expect(response.body.message).toEqual("User not found!")
+        expect(response.body).toHaveProperty('message')
+   
+    })
+
+    test('Negative case of updating a user with invalid new credientials', async () => {
+        const user = new User({ name: 'John Dillinger', email: 'j.dillinger@gmail.com', password: '123' })
+        await user.save()
+        const token = await user.generateAuthToken()
+
+        const response = await request(app)
+            .put(`/users/${user._id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send({ name: '', email: 'j.bdexample.com' })
+
+        expect(response.statusCode).toBe(400)
+        expect(response.body).toHaveProperty('message')
+    })
+
+    test('Negative case of deleting a user when not authorized (same logic would apply to other controllers)', async () => {
+        const user = new User({ name: 'Goku', email: 'goku@example.com', password: '123'})
+        await user.save()
+
+        const response = await request(app)
+            .delete(`/users/${user._id}`)
+
+        expect(response.statusCode).toBe(401)
+    })
+    test('Negative case of deleting a user when not logged in (same logic would apply to other controllers)', async () => {
+        const user = new User({ name: 'DB Cooper', email: 'db.cooper@example.com', password: '123'})
+        await user.save()
+        const token = await user.generateAuthToken()
+        user.isLoggedIn = false
+        await user.save()
+
+        const response = await request(app)
+            .delete(`/users/${user._id}`)
+            .set('Authorization', `Bearer ${token}`)
+
+        expect(response.statusCode).toBe(400)
+        expect(response.body.message).toEqual("Log back in!")
     })
 })

@@ -1,6 +1,5 @@
 const AgendaItem = require('../models/agendaItem');
 const User = require('../models/user');
-const moment = require('moment');
 
 
 exports.createAgendaItem = async function (req, res) {
@@ -13,7 +12,6 @@ exports.createAgendaItem = async function (req, res) {
           message: 'An agenda item with this date, start time, and finish time already exists!'
         });
       } else {
-
         const agendaItem = await AgendaItem.create(req.body);
         req.user.agendaItems.addToSet(agendaItem._id);
         await req.user.save();

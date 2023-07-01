@@ -2,7 +2,6 @@ const express = require('express')
 const morgan = require('morgan')
 const userRoutes = require('./routes/users')
 const agendaItemRoutes = require('./routes/agendaItems')
-const moment = require('moment');
 const app = express()
 
 app.use(express.json())
