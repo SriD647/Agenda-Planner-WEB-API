@@ -68,21 +68,6 @@ exports.getAgendaItemsByDate = async function (req, res) {
   }
 }
 
-// exports.getWeeklyAgendaItems = async function (req, res) {
-//   try{
-//     if (req.user.isLoggedIn) {
-//       const agendaItems = await AgendaItem.find({ startDate: req.params.id})
-//       res.json(agendaItems)
-//   } else {
-//       res.status(401).json({message:'Log back in!'})
-//   }
-    
-//   }
-//   catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// }
-
   exports.updateAgendaItem = async function(req, res){
     try{
         if (req.user.isLoggedIn) {
@@ -120,7 +105,7 @@ exports.deleteAgendaItem = async function(req, res) {
 exports.deleteAllAgendaItems = async function(req, res) {
   try {
       if (req.user.isLoggedIn) {
-          await AgendaItem.deleteMany({ user: req.user._id})
+          await AgendaItem.deleteMany({ user: req.params._id})
           while (req.user.agendaItems.length > 0) {
             req.user.agendaItems.pop();
           }

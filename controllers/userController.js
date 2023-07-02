@@ -7,19 +7,19 @@ const { deleteOne } = require('../models/agendaItem')
 
 
 exports.auth = async (req, res, next) => {//authorizing the user
-    try {
-      const token = req.header('Authorization').replace('Bearer ', '')
-      const data = jwt.verify(token, process.env.SECRET)
-      const user = await User.findOne({ _id: data._id })
-      if (!user) {
-        throw new Error()
-      }
-      req.user = user
-      next()
-    } catch (error) {
-      res.status(401).send('Not authorized')
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '')
+    const data = jwt.verify(token, process.env.SECRET)
+    const user = await User.findOne({ _id: data._id })
+    if (!user ) {
+      throw new Error()
     }
+    req.user = user
+    next()
+  } catch (error) {
+    res.status(401).send({message: 'Not authorized'})
   }
+}
 
 exports.createUser = async (req, res) => {
   try {
@@ -28,7 +28,7 @@ exports.createUser = async (req, res) => {
     await user.save()
     res.json({user})
   } catch (error) {
-    res.status(400).json({message: "A required credential is invalid!"} )
+    res.status(400).json({message: error.message} )
   }
 }
 
@@ -38,7 +38,8 @@ exports.loginUser = async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
         if(!user || !await bcrypt.compare(req.body.password, user.password)){
             throw new Error('Invalid Login Credentials')
-        } else {
+        } 
+        else {
             const token = await user.generateAuthToken()
             res.json({ user, token })
         }
@@ -59,28 +60,23 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         if (req.user.isLoggedIn) {
-            const updates = Object.keys(req.body)
-            const user = await User.findOne({ _id: req.params.id })
-            if (!user) {
-              throw new Error('User not found')
-            }
-            if (user.isLoggedIn) {
-                updates.forEach(update => user[update] = req.body[update])
-                await user.save()
-                res.json(user)
+              const updates = Object.keys(req.body)
+              updates.forEach(update => req.user[update] = req.body[update])
+              await req.user.save()
+              res.json(req.user)
             } else {
-                res.status(400).json({ message: 'Log back in!' })
+              res.status(400).json({ message: 'Log back in!' })
             }
         }
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
+        catch (error) {
+          res.status(400).json({ message: error.message })
+    } 
 }
 
 exports.deleteUser = async (req, res) => {
     try {
       if(req.user.isLoggedIn){
-      await AgendaItem.deleteMany({ user: req.params._id });  
+      await AgendaItem.deleteMany({ user: req.user._id });  
       await req.user.deleteOne()      
       res.status(200).json({message: 'User successfully deleted'})
   }else {
@@ -95,7 +91,7 @@ exports.deleteUser = async (req, res) => {
     try {
       req.user.isLoggedIn = false
       await req.user.save()
-      res.json({message:'User successfully logged out!'})
+      res.status(200).json({message: "User logged out successfully!", isLoggedIn: req.user.isLoggedIn})
     } catch (error) {
       res.status(400).json({ message: error.message })
     }

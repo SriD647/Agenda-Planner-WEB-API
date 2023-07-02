@@ -12,21 +12,20 @@ const userSchema = new mongoose.Schema({
     agendaItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'AgendaItem'}]
 })
 
-userSchema.pre('save', async function(next){ 
-  if(this.isModified('password')){
-    this.password = await bcrypt.hash(this.password,8)
-  }
-next() 
+userSchema.pre('save', async function(next){
+  this.isModified('password')? 
+  this.password = await bcrypt.hash(this.password, 8):
+  null;
+  next()
 })
 
 userSchema.methods.generateAuthToken = async function(){
-    this.isLoggedIn = true
-      await this.save()
-    const token = jwt.sign({_id:this._id},process.env.SECRET)
-    this.token = token
-    return token
+  this.isLoggedIn = true
+    await this.save()
+  const token = jwt.sign({_id:this._id}, process.env.SECRET) //{ expiresIn: '5m' }//)
+  this.token = token
+  return token
 }
-
 
 const User = mongoose.model('User',userSchema)
 module.exports = User;
