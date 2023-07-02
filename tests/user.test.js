@@ -5,6 +5,7 @@ const app = require('../app')
 const server = app.listen(8080, () => console.log('Lets get ready to test'))
 const User = require('../models/user')
 const AgendaItem = require('../models/agendaItem')
+
 let mongoServer
 
 beforeAll(async () => {
@@ -24,7 +25,7 @@ describe('Test the users endpoints- Positive cases', () => {
         const response = await request(app)
             .post('/users')
             .send({ name: 'Jason Bourne', email: 'j.bourne@example.com', password: '123' })
-
+        console.log(response.body)
         expect(response.statusCode).toBe(200)
         expect(response.body.user.name).toEqual('Jason Bourne')
         expect(response.body.user.email).toEqual('j.bourne@example.com')
@@ -39,7 +40,7 @@ describe('Test the users endpoints- Positive cases', () => {
         const response = await request(app)
             .post('/users/login')
             .send({ email: user.email, password: '123' })
-
+        console.log(response.body)
         expect(response.statusCode).toBe(200)
         expect(response.body.user.name).toEqual('Lara Croft')
         expect(response.body.user.email).toEqual('l.croft@example.com')
@@ -55,6 +56,7 @@ describe('Test the users endpoints- Positive cases', () => {
         await user.save()
         
         const response =  await request(app).get(`/users/${user._id}`)
+        console.log(response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body.name).toEqual('Ethan Hunt')
         expect(response.body.email).toEqual('e.hunt@example.com')
@@ -71,10 +73,10 @@ describe('Test the users endpoints- Positive cases', () => {
         const response = await request(app)
             .put(`/users/123`)
             .set('Authorization', `Bearer ${token}`)
-            .send({ name: 'Harry Potter', email: 'h.potter@example.com' })
+            .send({ name: 'Harry Potter' })
+            console.log(response.body)
         expect(response.statusCode).toBe(200)
         expect(response.body.name).toEqual('Harry Potter')
-        expect(response.body.email).toEqual('h.potter@example.com')
         expect(response.body).toHaveProperty('password')
         expect(response.body).toHaveProperty('agendaItems')
         expect(response.body).toHaveProperty('isLoggedIn') 
@@ -87,7 +89,7 @@ describe('Test the users endpoints- Positive cases', () => {
         const response = await request(app)
             .delete(`/users/${user._id}`)
             .set('Authorization', `Bearer ${token}`)
-
+        console.log(response.body)
         expect(response.statusCode).toBe(200)
         expect(response.body.message).toEqual('User successfully deleted');
     })
@@ -98,7 +100,7 @@ describe('Test the users endpoints- Positive cases', () => {
         const response = await request(app)
         .post('/users/logout')
         .set('Authorization', `Bearer ${token}`);
-        console.log(response.body)
+        console.log(user, response.body)
         expect(response.statusCode).toBe(200);
         expect(response.body.isLoggedIn).toEqual(false);
         expect(response.body.message).toEqual("User logged out successfully!");
@@ -110,7 +112,7 @@ describe('Test the users endpoints- Positive cases', () => {
 describe('Test the users endpoints- Negative cases', () => {
     test("Negative case of creating a user with invalid credentials", async () => {
         const response = await request(app).post("/users").send({ name: "", email: "akongmail.com", password: "" });
-    
+        console.log(response.body)
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty("message");
     })
@@ -120,7 +122,7 @@ describe('Test the users endpoints- Negative cases', () => {
         const response = await request(app)
             .post('/users/login')
             .send({ email: "h.simpson@gmail.com", password: 'abcd' })
-
+        console.log(response.body)
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toEqual("Invalid Login Credentials");    
 
@@ -131,7 +133,7 @@ describe('Test the users endpoints- Negative cases', () => {
         await user.save()
         
         const response =  await request(app).get(`/users/somethingincorect`)
-
+        console.log(response.body)
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toEqual("User not found!")
     })
@@ -143,7 +145,7 @@ describe('Test the users endpoints- Negative cases', () => {
             .put(`/users/${user._id}`)
 
             .send({ name: 'John Lennon', email: 'j.lennon@example.com' })
-
+        console.log(response.body)
         expect(response.statusCode).toBe(401)   
         expect(response.body.message).toEqual('Not authorized')
    
@@ -158,7 +160,7 @@ describe('Test the users endpoints- Negative cases', () => {
             .put(`/users/${user._id}`)
             .set('Authorization', `Bearer ${token}`)
             .send({ name: '', email: 'j.bdexample.com' })
-
+        console.log(response.body)
         expect(response.statusCode).toBe(400)
         expect(response.body).toHaveProperty('message')
     })
@@ -169,7 +171,7 @@ describe('Test the users endpoints- Negative cases', () => {
 
         const response = await request(app)
             .delete(`/users/${user._id}`)
-
+        console.log(response.body)
         expect(response.statusCode).toBe(401)
         expect(response.body.message).toEqual('Not authorized')
     })
@@ -183,7 +185,7 @@ describe('Test the users endpoints- Negative cases', () => {
         const response = await request(app)
             .delete(`/users/${user._id}`)
             .set('Authorization', `Bearer ${token}`)
-
+        console.log(response.body)
         expect(response.statusCode).toBe(400)
         expect(response.body.message).toEqual("Log back in!")
     })

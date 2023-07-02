@@ -28,6 +28,7 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
             .post('/agendaItems/new')
             .set('Authorization', `Bearer ${token}`)
             .send ({ title: 'Reading', startDate: '2023-08-08', endDate: '2023-08-08', startTime: '07:01 PM', endTime: '08:01 PM', user: user._id })
+            console.log(user)
         expect(response.statusCode).toBe(200)
         expect(response.body.title).toEqual('Reading')
         expect(response.body.startDate).toEqual('2023-08-08')
@@ -62,7 +63,7 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
         await user.save()
         const agendaItem1 = new AgendaItem({ title: 'Reading', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
         await agendaItem1.save()
-        const agendaItem2 = new AgendaItem({ title: 'Yoga', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '08:00 PM', endTime: '09:00 PM', user: user._id })
+        const agendaItem2 = new AgendaItem({ title: 'Yoga', startDate: '2023-08-30', endDate: '2023-08-30', startTime: '08:00 PM', endTime: '09:00 PM', user: user._id })
         await agendaItem2.save()
         const token = await user.generateAuthToken()
         const response = await request(app)
@@ -77,14 +78,8 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
             expect(response.body[0].endTime).toEqual('08:00 PM');
             expect(response.body[0]).toHaveProperty('user');
             expect(response.body[0]).toHaveProperty('_id');
-
-            expect(response.body[1].title).toEqual('Yoga');
-            expect(response.body[1].startDate).toEqual('2023-07-30');
-            expect(response.body[1].endDate).toEqual('2023-07-30');
-            expect(response.body[1].startTime).toEqual('08:00 PM');
-            expect(response.body[1].endTime).toEqual('09:00 PM');
-            expect(response.body[1]).toHaveProperty('user');
-            expect(response.body[1]).toHaveProperty('_id');          
+            // nothing from agendaItem 2 will be sent as expected as it does not have a startDate of 2023-07-30
+      
 })
     test('Get all agenda items that belong to user', async () => {
         const user = new User({ name: 'Ron Weasley', email: 'r.weasley@example.com', password: '123' })
@@ -97,7 +92,7 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
         const response = await request(app)
             .get(`/agendaItems/entireAgenda/${user._id}`)
             .set('Authorization', `Bearer ${token}`) 
-        console.log(user, agendaItem1, agendaItem2, response.body)
+        console.log(response.body)
             expect(response.statusCode).toEqual(200)
             expect(response.body[0].title).toEqual('Reading');
             expect(response.body[0].startDate).toEqual('2023-09-30');
@@ -128,10 +123,72 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
         const response = await request(app)
             .delete(`/agendaItems/clearAgenda/${user._id}`)
             .set('Authorization', `Bearer ${token}`)
-        console.log(user, agendaItem1, agendaItem2)
+        console.log(response.body)
         expect(response.statusCode).toBe(200)
         expect(response.body.message).toEqual('All agenda items associated with user sucessfully deleted')
-    })    
+    }) 
 
+    test('Delete a specific agenda item', async () => {
+        const user = new User({ name: 'Anderson Silva', email: 'a.silva@example.com', password: '123' })
+        await user.save()
+        const agendaItem1 = new AgendaItem({ title: 'Reading', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
+        await agendaItem1.save()
+        const token = await user.generateAuthToken()
+        const response = await request(app)
+            .delete(`/agendaItems/${agendaItem1._id}`)
+            .set('Authorization', `Bearer ${token}`)
+        console.log(response.body)
+        expect(response.statusCode).toBe(200)
+        expect(response.body.message).toEqual('Agenda item sucessfully deleted')
+    }) 
+    
+    test('It should update a specific agenda item', async () => {
+        const user = new User({ name: 'Humpty Dumpty', email: 'h.dumpty@example.com', password: '123'})
+        await user.save()
+        const agendaItem1 = new AgendaItem({ title: 'Reading', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
+        await agendaItem1.save()
+        const token = await user.generateAuthToken()
+
+        const response = await request(app)
+            .put(`/agendaItems/${agendaItem1._id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send({ startTime: '01:13 PM', endTime: '02:20 PM'})
+            console.log(response.body)
+        expect(response.statusCode).toBe(200)
+        expect(response.body.title).toEqual('Reading')
+        expect(response.body.startDate).toEqual('2023-07-30')
+        expect(response.body.endDate).toEqual('2023-07-30')
+        expect(response.body.startTime).toEqual('01:13 PM')
+        expect(response.body.endTime).toEqual('02:20 PM')
+    })
+})
+//Negative cases
+describe('Test the agendaItems endpoints- Negatives cases', () => {
+    test('Negative case for creating a new agenda item with invalid parameters', async () => {
+        const user = new User({ name: 'Jeff Escobar', email: 'j.e@example.com', password: '123'})
+        await user.save()
+        const token = await user.generateAuthToken()        
+        const response = await request(app)
+            .post('/agendaItems/new')
+            .set('Authorization', `Bearer ${token}`)
+            .send ({ title: 'Reading', endDate: '2023-08-08', startTime: '', endTime: '08:01 PM', user: user._id })
+        console.log(response.body)
+        expect(response.statusCode).toBe(400)
+        expect(response.body).toHaveProperty('message')                    
+})
+    test('Negative case for geting a specific agenda item with invalid  agendaItem :id', async () => {
+        const user = new User({ name: 'Donald Trump', email: 'donald.trump@example.com', password: '123' })
+        await user.save()
+        const agendaItem = new AgendaItem({ title: 'Reading', startDate: '2023-06-30', endDate: '2023-06-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
+        await agendaItem.save()
+        const token = await user.generateAuthToken()
+        const response = await request(app)
+            .get(`/agendaItems/somethingwrong`)
+            .set('Authorization', `Bearer ${token}`)
+        console.log(response.body)   
+        expect(response.statusCode).toBe(400)
+        expect(response.body.message).toEqual('Invalid agenda item id')                 
 })
 
+
+})

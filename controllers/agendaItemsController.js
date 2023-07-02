@@ -35,7 +35,7 @@ exports.getAgendaItem = async function (req, res){
       res.status(401).json({message:'Log back in!'})
   }
   } catch(error){
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: "Invalid agenda item id" })
   }
 }
 
