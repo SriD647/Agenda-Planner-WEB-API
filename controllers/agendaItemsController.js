@@ -2,27 +2,22 @@ const AgendaItem = require('../models/agendaItem');
 const User = require('../models/user');
 
 
-
-
-
 exports.createAgendaItem = async function (req, res) {
   try {
-    if (req.user.isLoggedIn) {
-      req.body.user = req.user._id;
-      if (await AgendaItem.findOne({startDate: req.body.startDate, endDate: req.body.endDate, startTime: req.body.startTime, endTime: req.body.endTime })) 
-      {
-        res.status(401).json({
-          message: 'An agenda item with this date, start time, and finish time already exists!'
-        });
-      } else {
-        const agendaItem = await AgendaItem.create(req.body);
-        req.user.agendaItems.addToSet(agendaItem._id);
-        await req.user.save();
-        res.json(agendaItem);
-      }
-    } else {
-      res.status(401).json({ message: 'Log back in!' });
+    req.body.user = req.user._id;
+    if (!req.user.isLoggedIn) {
+      return res.status(401).json({ message: 'Log back in!' });
     }
+
+    const existingAgendaItem = await AgendaItem.findOne({startDate: req.body.startDate, endDate: req.body.endDate, startTime: req.body.startTime, endTime: req.body.endTime })
+
+    if (existingAgendaItem) {
+      return res.status(401).json({ message: 'An agenda item with this date, start time, and finish time already exists!' });
+    }
+    const agendaItem = await AgendaItem.create(req.body)
+    req.user.agendaItems.addToSet(agendaItem._id);
+    await req.user.save();
+    res.json(agendaItem);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -41,7 +36,6 @@ exports.getAgendaItem = async function (req, res){
       res.status(400).json({ message: "Invalid agenda item id" })
   }
 }
-
 
 exports.getEntireAgenda = async (req, res) => {
   try {
