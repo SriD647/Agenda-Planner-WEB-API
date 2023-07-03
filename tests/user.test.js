@@ -71,7 +71,7 @@ describe('Test the users endpoints- Positive cases', () => {
         const token = await user.generateAuthToken()
 
         const response = await request(app)
-            .put(`/users/123`)
+            .put(`/users/${user._id}`)
             .set('Authorization', `Bearer ${token}`)
             .send({ name: 'Harry Potter' })
             console.log(response.body)
