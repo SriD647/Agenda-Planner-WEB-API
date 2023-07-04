@@ -5,12 +5,14 @@ const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
 
-    name:{type:String, required: true},
+    name:{type:String, required: true, match: /^[A-Za-z]+(?: [A-Za-z]+)?$/},
     email:{type:String, required: true, unique:true, match: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/},
-    password:{type:String, required: true},
+    password:{type:String, required: true, match:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()-_=+[\]{};:'",.<>/?]+$/},
     isLoggedIn: Boolean,
     agendaItems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'AgendaItem'}]
 })
+
+userSchema.index({ email: 1 }, { unique: true });
 
 userSchema.pre('save', async function(next){
   this.isModified('password')? 

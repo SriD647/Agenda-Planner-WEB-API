@@ -23,23 +23,26 @@ exports.auth = async (req, res, next) => {//authorizing the user
 
 exports.createUser = async (req, res) => {
   try {
+    if (!await User.findOne({ email: req.body.email})) {
     const user = new User(req.body)
     user.isLoggedIn = false
     await user.save()
     res.json({user})
+  }  else throw Error ("A user with that email already exists!")
   } catch (error) {
     res.status(400).json({message: error.message} )
   }
+  console.log(typeof req.body.password);
 }
 
 
 exports.loginUser = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email })
-        if(!user || !await bcrypt.compare(req.body.password, user.password)){
-            throw new Error('Invalid Login Credentials')
-        } 
-        else {
+      const user = await User.findOne({ email: req.body.email })
+      if(!user || !await bcrypt.compare(req.body.password, user.password)){
+         throw new Error('Incorrect Login Credentials')
+      }      
+      else {
             const token = await user.generateAuthToken()
             res.json({ user, token })
         }
@@ -51,14 +54,18 @@ exports.loginUser = async (req, res) => {
 exports.getUser = async (req, res) => {
   try { 
     const user = await User.findOne({ _id: req.params.id })
-      res.json(user) 
+    if (user) {
+    res.json(user) 
+    } else res.status(400).json({ message: "No user exists with such id" })
   } catch (error) {
-      res.status(400).json({ message: "User not found!" })
+      res.status(400).json({ message: "No user exists with such id" })
   }
 }
 
 exports.updateUser = async (req, res) => {
     try {
+
+      if (!await User.findOne({ email: req.body.email})) {
         if (req.user.isLoggedIn) {
               const updates = Object.keys(req.body)
               updates.forEach(update => req.user[update] = req.body[update])
@@ -67,7 +74,8 @@ exports.updateUser = async (req, res) => {
             } else {
               res.status(400).json({ message: 'Log back in!' })
             }
-        }
+        } else throw Error ("A user with that email already exists!")
+      }
         catch (error) {
           res.status(400).json({ message: error.message })
     } 
@@ -91,7 +99,7 @@ exports.deleteUser = async (req, res) => {
     try {
       req.user.isLoggedIn = false
       await req.user.save()
-      res.status(200).json({message: "User logged out successfully!", isLoggedIn: req.user.isLoggedIn})
+      res.status(200).json({message: "User logged out successfully!"})
     } catch (error) {
       res.status(400).json({ message: error.message })
     }
