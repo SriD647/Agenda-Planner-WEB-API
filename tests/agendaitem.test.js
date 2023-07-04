@@ -253,20 +253,20 @@ describe('Test the agendaItems endpoints- Negatives cases', () => {
         expect(response.body.message).toEqual('User has no agenda item with such id')   
     })
     
-//       test('Negative case for deleting all user agenda items when not authorized', async () => {
-//         const user = new User({ name: 'Lemony Snickett', email: 'l.s.nickket@example.com', password: '123' })
-//         await user.save()
-//         const agendaItem1 = new AgendaItem({ title: 'Reading', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
-//         await agendaItem1.save()
-//         const agendaItem2 = new AgendaItem({ title: 'Yoga', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '08:00 PM', endTime: '09:00 PM', user: user._id })
-//         await agendaItem2.save()
+      test('Negative case for deleting all user agenda items when not authorized', async () => {
+        const user = new User({ name: 'Lemony Snickett', email: 'l.s.nickket@example.com', password: '123a' })
+        await user.save()
+        const agendaItem1 = new AgendaItem({ title: 'Reading', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
+        await agendaItem1.save()
+        const agendaItem2 = new AgendaItem({ title: 'Yoga', startDate: '2023-07-30', endDate: '2023-07-30', startTime: '08:00 PM', endTime: '09:00 PM', user: user._id })
+        await agendaItem2.save()
        
-//         const response = await request(app)
-//             .delete(`/agendaItems/clearAgenda/somethingwrong`)
-//         console.log(response.body)
-//         expect(response.statusCode).toEqual(401)
-//         expect(response.body.message).toEqual('Not authorized')
-//     }) 
+        const response = await request(app)
+            .delete(`/agendaItems/clearAgenda/${user._id}`)
+        console.log(response.body)
+        expect(response.statusCode).toEqual(401)
+        expect(response.body.message).toEqual('Not authorized')
+    }) 
    
    
 })   

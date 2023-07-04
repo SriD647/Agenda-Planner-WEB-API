@@ -117,7 +117,7 @@ exports.deleteAllAgendaItems = async function(req, res) {
           res.status(200).json({message: 'All agenda items associated with user sucessfully deleted'})
 
       } else {
-          res.status(401).json({message: error.message})
+        res.status(401).json({message:'Log back in!'})
       }
   } catch(error) {
       res.status(400).json({message: error.message})
