@@ -7,9 +7,12 @@ exports.createAgendaItem = async function (req, res) {
     req.body.user = req.user._id;
     if (!req.user.isLoggedIn) {
       res.status(401).json({ message: 'Log back in!' });
-    } else if (await AgendaItem.findOne({startDate: req.body.startDate, endDate: req.body.endDate, startTime: req.body.startTime, endTime: req.body.endTime, user: req.user._id })) {
-      res.status(400).json({ message: 'An agenda item with this date, start time, and finish time already exists!' });
-    } else {  
+    } 
+    const agendaItemDateTime = await AgendaItem.findOne({date: req.body.date, startTime: req.body.startTime, endTime: req.body.endTime, user: req.user._id })
+     if (agendaItemDateTime) {
+      throw new Error('User already has an agenda item with this date, start time, and finish time!')
+    } 
+    else {  
     const agendaItem = await AgendaItem.create(req.body)
     req.user.agendaItems.addToSet(agendaItem._id);
     await req.user.save();
@@ -30,7 +33,7 @@ exports.getAgendaItem = async function (req, res){
       } else res.json(agendaItem)
   }else res.status(401).json({message:'Log back in!'})
   } catch(error){
-    res.status(400).json({ message: "User has no agenda item with such id" })
+    res.status(400).json({ message: error.message })
   }
 }
 
@@ -55,7 +58,7 @@ exports.getAgendaItemsByDate = async function (req, res) {
       if (!/^\d{4}-\d{2}-\d{2}$/.test(req.params.id)) {
         throw new Error("Invalid date format")
       }
-      const agendaItems = await AgendaItem.find({ startDate: req.params.id, user: req.user._id })
+      const agendaItems = await AgendaItem.find({ date: req.params.id, user: req.user._id })
       if (agendaItems.length>0) {
       res.json(agendaItems)
     } else res.json({message: "User has no agenda items on specified date"})
@@ -71,17 +74,19 @@ exports.updateAgendaItem = async function(req, res){
       if (!req.user.isLoggedIn) {
         res.status(401).json({ message: 'Log back in!' });
       }
-      else if (!await AgendaItem.findOne({ _id: req.params.id })) {
-          res.status(400).json({message: 'User has no agenda item with such id'})
-      } 
-      else if (await AgendaItem.findOne({startDate: req.body.startDate, endDate: req.body.endDate, startTime: req.body.startTime, endTime: req.body.endTime, user: req.user._id })){
-       throw new Error('User already has an agenda item with this date, start time, and finish time already exists!')
+      const agendaItemId = await AgendaItem.findOne({ _id: req.params.id });
+     if (!agendaItemId) {
+      throw new Error('User has no agenda item with such id')  
+    } 
+       const agendaItemDateTime= await AgendaItem.findOne({startDate: agendaItemId.startDate, startTime: agendaItemId.startTime, endTime: agendaItemId.endTime, user: req.user._id, _id: { $ne: agendaItemId._id }})
+      if (agendaItemDateTime){
+          throw new Error('User already has an agenda item with this date, start time, and finish time!')
       } 
         const agendaItem = await AgendaItem.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, req.body, { new: true })
         res.json(agendaItem)
   }
   catch (error){
-    res.status(400).json({message: 'User has no agenda item with such id'})
+    res.status(400).json({message: error.message})
     }
 }
 
@@ -91,7 +96,7 @@ exports.deleteAgendaItem = async function(req, res) {
         if (req.user.isLoggedIn) {
            const agendaItem= await AgendaItem.findOneAndDelete({_id: req.params.id, user: req.user._id})
            if (!agendaItem) {
-            res.status(400).json({message: 'User has no agenda item with such id'})
+            throw new Error('User has no agenda item with such id')  
            } 
             const index = req.user.agendaItems.indexOf(req.params.id)
             req.user.agendaItems.splice(index, 1)
