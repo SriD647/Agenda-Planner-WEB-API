@@ -7,10 +7,13 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ## **<u>Wireframes and relationship diagram</u>**<br>
 
-  <img src="Images/Wireframe 1- Login page.png" alt="Login page"><br>
+<img src="Images/Wireframe 1- Login page.png" alt="Login page" style="width: 300px; height: 300px;"><br>
 
-  <img src="Images/Wireframe 3- Home page.png" alt="Home page"><br>
+<img src="Images/Wireframe 3- Home page.png" alt="Home page" style="width: 300px; height: 300px;"><br>
 
+<img src="Images/Relationship diagram-1" alt="RD 1" style="width: 300px; height: 300px;"><br>
+
+<img src="Images/Relationship diagram-2" alt="rd 2" style="width: 300px; height: 300px;"> <br>
 
 <p>For more wireframes and more in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
 
