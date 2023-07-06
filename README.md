@@ -2,6 +2,16 @@
 
 Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. Hence, this API has full CRUD functionality.  In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. 
 
+## **Wireframes**
+
+![Alt text](<Wireframe 1- Login page.png>) ![Alt text](<Wireframe 2- Sign up page.png>)  ![Alt text](<Wireframe 3- Home page.png>)
+
+![Alt text](<Wireframe 4- A specific day.png>)    ![Alt text](<Wireframe 5- Menu.png>)
+
+## **Relatipnship diagram**
+
+![Alt text](image-1.png)  ![Alt text](image-2.png)
+
 ## **Global installations**
 
 1. Ensure you have node.js installed. To check if you already do, run the following command on terminal:<br> <br>``node -v``<br><br> If not, visit the following link and download based on your OS:<br> https://nodejs.org/en/download <br><br>
@@ -37,9 +47,21 @@ Please follow the following steps to install a local copy of project:<br>
 
 7. In the .env file add the following. Make sure to paste the appropriate information as instructed :<b> 
 ```
-MONGO_URI= <paste here  your mongoDB uri>
+MONGO_URI= <paste here your mongoDB uri>
 SECRET= < paste here your secret unhashed key>
 ```
+
+## **Running the application in dev mode**
+
+Making sure we are still in the root directory of the project please run the following terminal command:<br><br>`` npm run dev``<br><br>
+
+If the app is running correctly, you will see the following messages on the terminal:<br>
+
+``We are kickin' it on port: 3000``  <br>
+
+``Mongo is lit!``<br>
+
+The former indicate the server is up and running and the latter indicates you are successfully connected to the database.
 
 ## **Technologies used**
 - Express 
