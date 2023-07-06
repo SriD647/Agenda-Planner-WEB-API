@@ -2,7 +2,7 @@ const request = require('supertest')
 const mongoose = require('mongoose')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const app = require('../app')
-const server = app.listen(3000, () => console.log('Lets get ready to test'))
+const server = app.listen(3300, () => console.log('Lets get ready to test'))
 const User = require('../models/user')
 const AgendaItem = require('../models/agendaItem')
 
@@ -29,9 +29,10 @@ describe('Test the users endpoints- Positive cases', () => {
         expect(response.statusCode).toBe(200)
         expect(response.body.user.name).toEqual('Jason Bourne')
         expect(response.body.user.email).toEqual('j.bourne@example.com')
-        expect(response.body.user.isLoggedIn).toEqual(false)
+        expect(response.body.user.isLoggedIn).toEqual(true)
         expect(response.body.user.agendaItems).toEqual([])
         expect(response.body.user).toHaveProperty('password')
+        expect(response.body).toHaveProperty('token')
         
     }) 
     test('It should allow a user to login', async () => {

@@ -78,7 +78,8 @@ exports.updateAgendaItem = async function(req, res){
      if (!agendaItemId) {
       throw new Error('User has no agenda item with such id')  
     } 
-       const agendaItemDateTime= await AgendaItem.findOne({startDate: agendaItemId.startDate, startTime: agendaItemId.startTime, endTime: agendaItemId.endTime, user: req.user._id, _id: { $ne: agendaItemId._id }})
+       const agendaItemDateTime= await AgendaItem.findOne({startDate: req.body.startDate, startTime: req.body.startTime, endTime: req.body.endTime, user: req.user._id, _id: { $ne: req.params.id }})
+       console.log(agendaItemDateTime)
       if (agendaItemDateTime){
           throw new Error('User already has an agenda item with this date, start time, and finish time!')
       } 
@@ -86,7 +87,7 @@ exports.updateAgendaItem = async function(req, res){
         res.json(agendaItem)
   }
   catch (error){
-    res.status(400).json({message: error.message})
+     res.status(400).json({message: error.message})
     }
 }
 

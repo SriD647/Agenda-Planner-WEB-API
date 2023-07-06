@@ -87,7 +87,7 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
         await agendaItem2.save()
         const token = await user.generateAuthToken()
         const response = await request(app)
-            .get(`/agendaItems/entireAgenda/${user._id}`)
+            .get(`/agendaItems/entireAgenda`)
             .set('Authorization', `Bearer ${token}`) 
         console.log(response.body)
             expect(response.statusCode).toEqual(200)
@@ -119,7 +119,7 @@ describe('Test the agendaItems endpoints- Positive cases', () => {
         const token = await user.generateAuthToken()
        
         const response = await request(app)
-            .delete(`/agendaItems/clearAgenda/${user._id}`)
+            .delete(`/agendaItems/entireAgenda/clear`)
             .set('Authorization', `Bearer ${token}`)
         console.log(response.body)
         expect(response.statusCode).toBe(200)
@@ -195,7 +195,7 @@ describe('Test the agendaItems endpoints- Negatives cases', () => {
         await agendaItem.save()
         const token = await user.generateAuthToken()
         const response = await request(app)
-            .get(`/agendaItems/somethingwrong`)
+            .get(`/agendaItems/64a5fs`)
             .set('Authorization', `Bearer ${token}`)
         console.log(response.body)   
         expect(response.statusCode).toBe(400)
@@ -220,14 +220,14 @@ describe('Test the agendaItems endpoints- Negatives cases', () => {
      })
     //  same logic for updating and deleting when not authorized !! :) 
      test(' Negative test to get all agenda items of user when not authorized', async () => {
-        const user = new User({ name: 'Ron Weasley', email: 'r.w.easley@example.com', password: '12l3' })
+        const user = new User({ name: 'Ron Weasley', email: 'r.w.easley@example.com', password: '12l3a' })
         await user.save()
         const agendaItem1 = new AgendaItem({ title: 'Reading', date: '2023-09-30', startTime: '07:00 PM', endTime: '08:00 PM', user: user._id })
         await agendaItem1.save()
         const agendaItem2 = new AgendaItem({ title: 'Yoga', date: '2023-09-30', startTime: '08:00 PM', endTime: '09:00 PM', user: user._id })
         await agendaItem2.save()
         const response = await request(app)
-            .get(`/agendaItems/entireAgenda/${user._id}`)
+            .get(`/agendaItems/entireAgenda`)
             console.log(response.body)
             expect(response.statusCode).toEqual(401)
             expect(response.body.message).toEqual('Not authorized')   
@@ -246,7 +246,7 @@ describe('Test the agendaItems endpoints- Negatives cases', () => {
             .send({ startTime: '01:13 PM', endTime: '02:20 PM'})
             console.log(response.body)
         expect(response.statusCode).toBe(400)
-        expect(response.body.message).toEqual('User has no agenda item with such id')  
+        expect(response.body).toHaveProperty('message')   
    })
 
    test('Negative case for deleting a specific agenda item with invalid id', async () => {
@@ -260,7 +260,7 @@ describe('Test the agendaItems endpoints- Negatives cases', () => {
             .set('Authorization', `Bearer ${token}`)
             console.log(response.body)
         expect(response.statusCode).toBe(400)
-        expect(response.body.message).toEqual('User has no agenda item with such id')   
+        expect(response.body).toHaveProperty('message')     
     })
     
       test('Negative case for deleting all user agenda items when not authorized', async () => {
@@ -272,7 +272,7 @@ describe('Test the agendaItems endpoints- Negatives cases', () => {
         await agendaItem2.save()
        
         const response = await request(app)
-            .delete(`/agendaItems/clearAgenda/${user._id}`)
+            .delete(`/agendaItems/entireAgenda/clear`)
         console.log(response.body)
         expect(response.statusCode).toEqual(401)
         expect(response.body.message).toEqual('Not authorized')

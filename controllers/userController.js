@@ -25,9 +25,9 @@ exports.createUser = async (req, res) => {
   try {
     if (!await User.findOne({ email: req.body.email})) {
     const user = new User(req.body)
-    user.isLoggedIn = false
     await user.save()
-    res.json({user})
+    const token = await user.generateAuthToken()
+    res.json({user, token})
   }  else throw Error ("A user with that email already exists!")
   } catch (error) {
     res.status(400).json({message: error.message} )
@@ -64,7 +64,7 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
 
-      if (!await User.findOne({ email: req.body.email})) {
+      if (!await User.findOne({ email: req.body.email, _id: { $ne: req.user.id } })) {
         if (req.user.isLoggedIn) {
               const updates = Object.keys(req.body)
               updates.forEach(update => req.user[update] = req.body[update])
