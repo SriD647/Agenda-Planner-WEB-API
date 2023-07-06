@@ -2,7 +2,7 @@
 
 Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. Hence, this API has full CRUD functionality.  In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. 
 
-## **Wireframes and relationship diagram**
+## **<u>Wireframes and relationship diagram**</u>
 
 ![Adf](<Wireframe 1- Login page.png>) ![Alt text](<Wireframe 3- Home page.png>)
 
@@ -11,7 +11,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 <p>For more wireframes and more in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
 
-## **Global installations**
+## **<u>Global installations**</u>
 
 1. Ensure you have node.js installed. To check if you already do, run the following command on terminal:<br> <br>``node -v``<br><br> If not, visit the following link and download based on your OS:<br> https://nodejs.org/en/download <br><br>
 
@@ -19,13 +19,13 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
  ``nodemon -v``<br><br> 
  If not, install nodemon globally using terminal command: <br><br> ``npm install -g nodemon``
 
-## **How to install the app on your local machine**
+## **<u>How to install the app on your local machine**</u>
 
 Please follow the following steps to install a local copy of project:<br>
 
 1. Copy the following HTTPs link of the remote repository:<br>
 
-   `` https://github.com/SriD647/Week11-Homework.git``<br><br>
+   `` https://github.com/SriD647/Week11-Homework.git``<br>
   
 
 2. Use following command on terminal to create local directory on computer at location of your choice. This directory will host the local repository.
@@ -36,15 +36,16 @@ Please follow the following steps to install a local copy of project:<br>
 3. Enter and run the following command on the terminal, using the link from step 1 (replace word link with actual link from step 1).<br><br>` git clone link `<br><br>  You should now have local copy of the project in the created directory. Please make sure to be in the project folder with the use of terminal command:<br><br> `cd unit-2-project`<br>
 
 
-## **Pre-run project set up**
+## **<u>Pre-run project set up**</u>
 
-4. Ensure you are in the project folder unit-2-project as instructed in step 3. Install the necesessary project dependencies in project folder using terminal command:<br><br>``npm i``<br>
+1. Ensure you are in the project folder unit-2-project as instructed in step 3 from above. Install the necesessary project dependencies in project folder using terminal command:<br><br>``npm i``<br>
 
-5. Create a .env file and a .gitignore file in the project folder using the following terminal command:<br><br> ``touch .env .gitignore``<br><br> The purpose of the env file is to store sensitive information and git ignore prevents whatever is mentioned in it from being pushed into github.
+2. Create a .env file and a .gitignore file in the project folder using the following terminal command:<br><br> ``touch .env .gitignore``<br><br> The purpose of the env file is to store sensitive information and git ignore prevents whatever is mentioned in it from being pushed into github.
 
-6. Open the project on VS Code using terminal command:<br><br> ``code .``<br>
+3. Open the project on VS Code using terminal command:<br><br> ``code .``<br>
 
-7. In the .env file add the following. Make sure to paste the appropriate information as instructed :<b> 
+4. In the .env file add the following. Make sure to paste the appropriate information as instructed :<b> 
+
 ```
 MONGO_URI= <paste here your mongoDB uri>
 SECRET= < paste here your secret unhashed key>
@@ -71,3 +72,5 @@ The former indicate the server is up and running and the latter indicates you ar
 - Bcrypt (password encyption) & Jsonwebtoken (token authentication)
 - Jest & Supertest (API endpoint testing)
 - Artillerty (load testing)
+
+
