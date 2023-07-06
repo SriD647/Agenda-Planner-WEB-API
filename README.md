@@ -2,15 +2,14 @@
 
 Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. Hence, this API has full CRUD functionality.  In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. 
 
-## **Wireframes**
+## **Wireframes and relationship diagram**
 
-![Alt text](<Wireframe 1- Login page.png>) ![Alt text](<Wireframe 2- Sign up page.png>)  ![Alt text](<Wireframe 3- Home page.png>)
+![Adf](<Wireframe 1- Login page.png>) ![Alt text](<Wireframe 3- Home page.png>)
 
-![Alt text](<Wireframe 4- A specific day.png>)    ![Alt text](<Wireframe 5- Menu.png>)
-
-## **Relatipnship diagram**
 
 ![Alt text](image-1.png)  ![Alt text](image-2.png)
+
+<p>For more wireframes and more in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
 
 ## **Global installations**
 
