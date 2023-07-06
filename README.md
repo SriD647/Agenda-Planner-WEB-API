@@ -4,7 +4,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ---
 
-## **<u>Wireframes and relationship diagram**</u>
+## **<u>Wireframes and relationship diagram</u>**
 
 ![Adf](<Wireframe 1- Login page.png>) ![Alt text](<Wireframe 3- Home page.png>)
 

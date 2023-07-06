@@ -2,7 +2,7 @@ const request = require('supertest')
 const mongoose = require('mongoose')
 const { MongoMemoryServer } = require('mongodb-memory-server')
 const app = require('../app')
-const server = app.listen(3300, () => console.log('Lets get ready to test'))
+const server = app.listen(3000, () => console.log('Lets get ready to test'))
 const User = require('../models/user')
 const AgendaItem = require('../models/agendaItem')
 

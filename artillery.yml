@@ -2,22 +2,18 @@ config:
   target: 'http://localhost:3000'
   phases:
     - duration: 60
-      arrivalRate: 10
+      arrivalRate: 20
 
 scenarios:
-  - flow:
-      - get:
-          url: "/users/:id"
+  - name: "Log in user"
+    flow:
+      - post:
+          url: "/users/login"
           json:
-            name: "Justin Trudeau"
-            email: "j.trudeau@canada.com"
-            password: "1324abc"
+            email: "sri@gmail.com"
+            password: "123a"
 
-      # - post:
-      #     url: "/users"
-      #     json:
-      #       name: "Doug Ford"
-      #       email: "d.ford@canada.com"
-      #       password: "1324abc"
-
-           
+  - name: "GET user profile"
+    flow:
+      - get:
+          url: "/users/64a608c0743acacbd6fb3243"
