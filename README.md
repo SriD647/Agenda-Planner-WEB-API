@@ -1,19 +1,21 @@
 # **Welcome to Agenda Planner**
 
-Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. Hence, this API has full CRUD functionality.  In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. 
+Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. Hence, this API has full CRUD functionality on both data entities (agenda items and user profile). 
 
 ---
 
-## **<u>Wireframes and relationship diagram</u>**
 
-![Adf](<Wireframe 1- Login page.png>) ![Alt text](<Wireframe 3- Home page.png>)
+## **<u>Wireframes and relationship diagram</u>**<br>
 
+  <img src="images/Wireframe 1- Login page.png" alt="Login page"><br>
 
-![Alt text](image-1.png)  ![Alt text](image-2.png)
+  <img src="images/Wireframe 3- Home page.png" alt="Home page"><br>
+
 
 <p>For more wireframes and more in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
 
 ---
+
 
 ## **<u>Global installations**</u>
 
@@ -80,13 +82,14 @@ The former indicate the server is up and running and the latter indicates you ar
 
 ## **Technologies used**
 - Express 
-- Javascript
+- Javascript 
 - Node.js
 - Mongoose
-- MongoDB
+- MongoDB 
 - Bcrypt (password encyption) & Jsonwebtoken (token authentication)
 - Jest & Supertest (API endpoint testing)
 - Artillerty (load testing)
+- POSTMAN (manual testing)
+- Excalidraw (wireframes) and Trello (project journey)
 
 ---
-
