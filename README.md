@@ -108,17 +108,75 @@ DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda i
 DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
 ```
 
-All API requests should return a status code and a response body. Successful requests return 200 series status codes with the intended information as the response body. Unsuccessful requests return status codes of 400 series with an error message as the response body.
+All API requests should return a status code and a response body. Successful requests return 200 series status codes with the intended information as the response body. Unsuccessful requests return status codes of 400 series with an error message as the response body.<br>
+
+---
 
 ## **Examples of how to run API request on POSTMAN**
 
-The following are two examples with step by step instructions on how to run API requests on POSTMAN. Please visit their website for instructions on how to use browser edition and/or desktop edition:  <a href="https://www.postman.com/">POSTMAN</a>
+The following are two examples with step by step instructions and screenshots on how to run API requests on POSTMAN. Please visit their website for instructions on how to use browser edition and/or desktop edition:  <a href="https://www.postman.com/">POSTMAN</a>
 
 
 ### **Creating a user**
 
-1. 
+Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a user (as mentioned in previous section): `localhost:3000/users`. In the body tab choose `raw` and `JSON`. Copy the following code into the request body, and click send. Note that the request body follows the requirements of the user schema.:<br>
 
+```
+{
+    "name": "FirstName LastName",
+    "email": "first.last@gmail.com",
+    "password": "123a"
+}
+```
+
+Refer to the following screen shot:
+
+<img src="Images/Postman 1.png" alt="PM 1"><br>
+
+Notice the response body and status code that are returned:<br>
+
+<img src="Images/Postman 2.png" alt="PM 2"><br>
+
+Important details:<br>
+
+- Status code of 200 and intended response of user + token objects, indicating a successful request
+- An _id key which stores the unique id of this user object
+- The name, email, and password passed into the request body. Note the password is now hashed.
+- The agendaItems key in the user object which stores the id's of all agenda items the user creates
+- isLoggedIn key in user object is set to true, meaning the user is now logged in
+- A token key, which stores the JWT. Please copy this token as it will be used for any future API request that requires authenthorization (e.g. creating an agenda item). <br>
+
+### **Creating an agenda item**
+
+Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a new agenda item: `localhost:3000/agendaItem/new`.Copy the following code into the request body. Refer to the photo below for a screen shot. Note that the request body follows the requirements of the agenda item schema.:<br>
+
+```
+{
+    "title": "Study",
+    "description": "Unit 1 and 2 review",
+    "date": "2023-07-08",
+    "startTime": "08:00 AM",
+    "endTime": "10:00 AM"
+}
+```
+Refer to the following screen shot:
+
+<img src="Images/Postman 3.png" alt="PM 3"><br>
+
+Before clicking send, we must add the authentication token copied from previous step (create a user). This is because creating an agenda item is a request that requires the user to be authorized. Go to the authorization tab in Postman and from the type dropdown, select the option "Bearer Token". Then paste the token into the form bar. Refer to the screenshot below <br>
+
+<img src="Images/Postman 5.png" alt="PM 3"><br>
+
+One the token is pasted, click send to send the API request. Notice the response body and status code that are returned:<br>
+
+<img src="Images/Postman 4.png" alt="PM 4"><br>
+
+Important details:<br>
+
+- Status code of 200 and intended response of agenda item object, indicating a successful request
+- The title, desciption, date, startTime, and endTime which were passed into the request body 
+- A user key which stores the id of the user this agenda item belongs to (same id from previous step)
+- An _id key which stores the unique id of this agenda item object <br>
 
 ## **Technologies used**
 - Express 
