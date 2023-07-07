@@ -131,7 +131,7 @@ Start off by choosing the HTTP method as POST. In the URL bar, paste the appropr
 
 Refer to the following screen shot:
 
-<img src="Images/Postman 1.png" alt="PM 1"><br>
+<img src="Images/Postman 1.png" alt="PM 1" style="width: 750px"><br>
 
 Notice the response body and status code that are returned:<br>
 
@@ -148,7 +148,7 @@ Important details:<br>
 
 ### **Creating an agenda item**
 
-Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a new agenda item: `localhost:3000/agendaItem/new`.Copy the following code into the request body. Refer to the photo below for a screen shot. Note that the request body follows the requirements of the agenda item schema.:<br>
+Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a new agenda item: `localhost:3000/agendaItems/new`.Copy the following code below into the request body. Note that the request body follows the requirements of the agenda item schema.:<br>
 
 ```
 {
@@ -161,7 +161,7 @@ Start off by choosing the HTTP method as POST. In the URL bar, paste the appropr
 ```
 Refer to the following screen shot:
 
-<img src="Images/Postman 3.png" alt="PM 3"><br>
+<img src="Images/Postman 3.png" alt="PM 3" style="width: 750px"><br>
 
 Before clicking send, we must add the authentication token copied from previous step (create a user). This is because creating an agenda item is a request that requires the user to be authorized. Go to the authorization tab in Postman and from the type dropdown, select the option "Bearer Token". Then paste the token into the form bar. Refer to the screenshot below <br>
 
