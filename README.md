@@ -75,6 +75,44 @@ If the app is running correctly, you will see the following messages on the term
 The former indicates the server is up and running and the latter indicates you are successfully connected to the database.
 
 ---
+## <u>**Understanding the data entities and their schemas**</u> <br>
+
+It is important to satisfy the requirements of the Mongoose schema for both entities, as all instances will be stored in  the data base with this blueprint. If schema says something is required and/or must be unique (something else cannot have the same value) this must be respected or the request will fail.
+
+The following is the Mongoose schema for the user data entity:<br>
+
+
+<img src="Project images/User Schema.png" alt="PM 1" style="height: 250px"><br>
+
+The following table helps us understand the user schema better when we create a new user. It includes the key, data type, example format, if it is required, and if it must be unique:<br>
+
+```
+Name     | String | "Firstname Lastname" | Required | Uniqueness not required
+Email    | String | "abc@gmail.com"      | Required | Uniqueness required
+Password | String | "123a"               | Required | Uniqueness not required
+
+```
+
+Please note all only the keys of name, email, and password are required when creating a user. For logging in, name is no longer required and the email + password can suffice.
+
+The following is the Mongoose schema for the agenda item data entity:<br>
+
+<img src="Project images/AI schema.png" alt="PM 1" style="height: 250px"><br>
+
+The following table, similar to above helps us understand the agenda item schema better for when we create a new agenda item.<br>
+
+```
+title       | String | "Working"    | Required     | Uniqueness not required
+description | String | "Leg day"    | Not required | Uniqueness not required
+date        | String | "2023-07-08" | Required     | Uniqueness not required
+startTime   | String | "07:00 AM"   | Required     | Uniqueness not required
+endTime     | String | "07:00 AM"   | Required     | Uniqueness not required
+```
+<br>
+
+Please note that desciption is optional and the only key from the table not required when creating a new item. It is also important to know that no two agenda items can have the same date, startTime, and endTime (as described in the controller).
+
+
 ## <u>**List of API requests**</u> <br>
 
 As mentioned the web api has full CRUD functionality in both of the data entities. This is made possible through the API requests that make this happen.<br>
