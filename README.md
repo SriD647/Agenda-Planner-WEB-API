@@ -15,7 +15,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 <img src="Project images/Wireframe 3- Home page.png" alt="Home page" style="height: 350px; width: 350px">
 </p><br> 
 
-<p>For the rest of the wireframes, relationship diagrams, and in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
+<p>For the rest of my wireframes, relationship diagrams, and in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
 
 ---
 
@@ -34,9 +34,9 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 Please follow the following steps to install a local copy of project:<br>
 
-1. Copy the following HTTPs link of the remote repository: <a href="https://github.com/SriD647/Week11-Homework.git">SSD</a><br>
+1. Copy the following HTTPs link of the remote repository: `https://github.com/SriD647/Week11-Homework.git`<br>
   
-2. Use following command on terminal to create local directory on computer at location of your choice. This directory will host the local repository.
+2. Use the following command on terminal to create local directory on your computer at a location of your choice. This directory will host the local repository.
  <br><br>``mkdir filename``<br>
  
    Make sure to be in that file using the terminal command:<br><br>``cd filename `` <br>
@@ -52,7 +52,7 @@ Please follow the following steps to install a local copy of project:<br>
 
 2. Create a .env file and a .gitignore file in the project folder using the following terminal command:<br><br> ``touch .env .gitignore``<br><br> The purpose of the env file is to store sensitive information and git ignore prevents whatever is mentioned in it from being pushed into github.
 
-3. Open the project on VS Code using terminal command:<br><br> ``code .``<br>
+3. Open the project on VS Code using the terminal command:<br><br> ``code .``<br>
 
 4. In the .env file add the following. Make sure to paste the appropriate information as instructed :<br>
 
@@ -77,23 +77,25 @@ The former indicates the server is up and running and the latter indicates you a
 ---
 ## <u>**Understanding the data entities and their schemas**</u> <br>
 
-It is important to satisfy the requirements of the Mongoose schema for both entities, as all instances will be stored in  the data base with this blueprint. If schema says something is required and/or must be unique (something else cannot have the same value) this must be respected or the request will fail.
+It is important to satisfy the requirements of the Mongoose schema for both entities, as all data entity objects will be stored in  the data base with this blueprint. If the schema says something is required and/or must be unique this must be respected or the request will fail.
 
 The following is the Mongoose schema for the user data entity:<br>
 
 
 <img src="Project images/User schema.png" alt="PM 1" style="height: 250px"><br>
 
-The following table helps us understand the user schema better when we create a new user. It includes the key, data type, example format, if it is required, and if it must be unique:<br>
+The following table helps us understand the user schema better when we create a new user object. It includes the key, data characteristic, example format, if it is required, and if it must be unique:<br>
 
 ```
-Name     | String | "Firstname Lastname" | Required | Uniqueness not required
-Email    | String | "abc@gmail.com"      | Required | Uniqueness required
-Password | String | "123a"               | Required | Uniqueness not required
+Name        | String           | "Firstname Lastname" | Required
+Email       | String           | "abc@gmail.com"      | Required, must be unique
+Password    | String           | "123a"               | Required
+isLoggedIn  | Boolean          | True or False        | Not required
+agendaItems | [] of ObjectId's | [ObID1, ObID2]       | Not required
 
 ```
 
-Please note all only the keys of name, email, and password are required when creating a user. For logging in, name is no longer required and the email + password can suffice.
+Please note all only the keys of name, email, password are required when creating a user document, and their values are provided through the request body. By default the value of the isLoggedIn key will be set to false and the value of the agendaItems key will be set to an empty array. The appropriate controller functions set and update these values accordingly.
 
 The following is the Mongoose schema for the agenda item data entity:<br>
 
@@ -102,24 +104,25 @@ The following is the Mongoose schema for the agenda item data entity:<br>
 The following table, similar to above helps us understand the agenda item schema better for when we create a new agenda item.<br>
 
 ```
-title       | String | "Working"    | Required     | Uniqueness not required
-description | String | "Leg day"    | Not required | Uniqueness not required
-date        | String | "2023-07-08" | Required     | Uniqueness not required
-startTime   | String | "07:00 AM"   | Required     | Uniqueness not required
-endTime     | String | "07:00 AM"   | Required     | Uniqueness not required
+title       | String | "Gym"                    | Required
+description | String | "Leg day"                | Not required
+date        | String | "2023-07-08"             | Required
+startTime   | String | "07:00 AM"               | Required 
+endTime     | String | "07:00 AM"               | Required
+user        | ObjID  | 64a208F5743acacbd6fb324a | Required
 ```
 <br>
 
-Please note that desciption is optional and the only key from the table not required when creating a new item. It is also important to know that no two agenda items can have the same date, startTime, and endTime (as described in the controller).
+Please note that the desciption key is optional and the only key from the table not required from the request body when creating a new item. The user key stores the value of the user's object ID. This value comes not from the request body, but from through the controller function reponsible for creating a new agenda item. It is also important to note that no two agenda items can have the same date, startTime, and endTime (as described in the relevant controller funcitons).
 
 
 ## <u>**List of API requests**</u> <br>
 
-As mentioned the web api has full CRUD functionality in both of the data entities. This is made possible through the API requests that make this happen.<br>
+As mentioned the web api has full CRUD functionality in both of the data entities. This is made possible through the diverse range of API requests.<br>
 
-It is important to note that most API requests require the user to be logged in and authorized (via JWT authentication). A JWT token is generated only when the user `creates a user` profile and when the user `logs in`. This token enables the user to make the requests that require this authorization. <br>
+It is important to note that most API requests require the user to be logged in and authorized (via JWT authentication). A JWT token is generated only when the user `creates a user` profile and when the user `logs in`. This token then enables the user to make the requests that require this authorization. <br>
 
-The following shows all the API requests the web api is capabale of for both entities. It includes, the http request method, url, intended operation, and clarifies which API requests require JWT authentication: <br>
+The following shows all the API requests the web api is capabale for both entities. It includes, the http request method, url, intended operation, and clarifies if the request creates or requires JWT: <br>
 
 ### **Users**
 ```
@@ -132,14 +135,20 @@ DELETE | localhost:3000/:id          | Deletes a user profile by user id | Requi
 ```
 
 ### **Agenda items**
+
+
+
+
 ```
-POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user           | Requires a JWT 
-GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id           | Requires a JWT 
-GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items                  | Requires a JWT
-GET    | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date | Requires a JWT
-PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id         | Requires a JWT
-DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id         | Requires a JWT
-DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user             | Requires a JWT
+| METHOD |             ROUTE                             |                  OPERATION                   |       JWT      |
+| ------ | --------------------------------------------- | -------------------------------------------- | -------------- |
+| POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user           | Requires a JWT | 
+| GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id           | Requires a JWT | 
+| GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items                  | Requires a JWT |
+| GET    | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date | Requires a JWT |
+| PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id         | Requires a JWT |
+| DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id         | Requires a JWT |
+| DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user             | Requires a JWT |
 ```
 
 All API requests should return a status code and a response body. Successful requests return 200 series status codes with the intended information as the response body. Unsuccessful requests return status codes of 400 series with an error message as the response body.<br>
@@ -155,7 +164,7 @@ The following are two examples with step by step instructions and screenshots on
 
 ### **Creating a user**
 
-Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a user (as mentioned in previous section): `localhost:3000/users`. In the body tab choose `raw` and `JSON`. Copy the following code into the request body, and click send. Note that the request body follows the requirements of the user schema.:<br>
+Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a user (as mentioned in previous section): `localhost:3000/users`. In the body tab choose `raw` and `JSON`. Copy the following code into the request body, and click send note that the request body follows the requirements of the user schema!):<br>
 
 ```
 {
@@ -177,16 +186,16 @@ Important details:<br>
 
 - Status code of 200 and intended response of user + token objects, indicating a successful request
 - An _id key which stores the unique id of this user object
-- The name, email, and password passed into the request body. Note the password is now hashed.
-- The agendaItems key in the user object which stores the id's of all agenda items the user creates
+- The name, email, and password from the request body. Note the password is now hashed.
+- The agendaItems key is set to an empty array by default
 - isLoggedIn key in user object is set to true, meaning the user is now logged in
-- A token key, which stores the JWT. Please copy this token as it will be used for any future API request that requires authenthorization (e.g. creating an agenda item). <br>
+- A token key, which stores the JWT. Please copy this token as it will be used for any future API request that requires authorization (e.g. creating an agenda item). <br>
 
-A user object with this information will now exist in the database.
+A user object how we see it in the response body will now exist in the database.
 
 ### **Creating an agenda item**
 
-Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a new agenda item: `localhost:3000/agendaItems/new`.Copy the following code below into the request body. Note that the request body follows the requirements of the agenda item schema.:<br>
+Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a new agenda item: `localhost:3000/agendaItems/new`. Copy the following code below into the request body. Note that the request body follows the requirements of the agenda item schema.:<br>
 
 ```
 {
@@ -212,15 +221,15 @@ Once the token is pasted, click send to send the API request. Notice the respons
 Important details:<br>
 
 - Status code of 200 and intended response of agenda item object, indicating a successful request
-- The title, desciption, date, startTime, and endTime from the request body 
-- A user key which stores the id of the user this agenda item belongs to (same id from previous step)
+- The title, description, date, startTime, and endTime provided from the request body 
+- A user key which stores the id of the user this agenda item belongs to (from previous step)
 - An _id key which stores the unique id of this agenda item object <br>
 
-An agenda item object with this information will now exist in the database.<br><br>
+An agenda item object as we see in the response body will now exist in the database.<br><br>
 
 ## **How to run tests**
 
-Jest and Supertest were used to test for the API endpoints for both data entities and ensure the expected behavior and correctness of the server's responses. Both successful and negative cases were tested for (29 total) and all resulted in a pass. To run Jest and Supertest run the following command in the terminal (please make sure you are in the project directory unit-2-project): `npm run test`<br><br>
+Jest and Supertest were used to test for the API endpoints for both data entities and to ensure the expected behavior and correctness of the server's responses. Both successful and negative cases were tested for (29 total) and all resulted in a pass. To run Jest and Supertest run the following command in the terminal (please make sure you are in the project directory unit-2-project): `npm run test`<br><br>
 
 ## **How to start the app without dev mode**
 
@@ -229,11 +238,11 @@ To start the app without dev mode, once again make sure you are in the right dir
 
 
 ## **Technologies used**
-- Express 
-- Javascript 
-- Node.js
-- Mongoose
-- MongoDB 
+- Express (web api framework)
+- Javascript (core programming language) 
+- Node.js (JavaScript runtime environment)
+- Mongoose (database interaction)
+- MongoDB (datebase)
 - Bcrypt (password encyption) & Jsonwebtoken (token authentication)
 - Jest & Supertest (API endpoint testing)
 - Artillerty (load testing)
