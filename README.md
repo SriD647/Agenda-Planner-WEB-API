@@ -88,7 +88,7 @@ The following table helps us understand the user schema better when we create a 
 
 ```
 |    KEY      |      TYPE        |      FORMAT          |     REQUIRED/UNIQUE      |
-|-------------|------------------|----------------------|--------------------------|
+| ----------- | ---------------- | -------------------- | ------------------------ |
 | Name        | String           | "Firstname Lastname" | Required                 |
 | Email       | String           | "abc@gmail.com"      | Required, must be unique |
 | Password    | String           | "123a"               | Required                 |
@@ -107,7 +107,7 @@ The following table, similar to above helps us understand the agenda item schema
 
 ```
 |     KEY     |  TYPE  |        FORMAT            | REQUIRED/UNIQUE |
-|-------------|--------|--------------------------|-----------------|
+| ----------- | ------ | ------------------------ | --------------- |
 | title       | String | "Gym"                    | Required        |
 | description | String | "Leg day"                | Not required    |
 | date        | String | "2023-07-08"             | Required        |
@@ -131,7 +131,7 @@ The following shows all the API requests the web api is capabale for both entiti
 ### **Users**
 ```
 | METHOD |         ROUTE               |              OPERATION            |      JWT       |
-|--------|-----------------------------|-----------------------------------|----------------|
+| ------ | --------------------------- | --------------------------------- | -------------- |
 | POST   | localhost:3000/users        | Creates a user                    | Creates a JWT  |
 | POST   | localhost:3000/users/login  | Logs in a user                    | Creates a JWT  |
 | POST   | localhost:3000/users/logout | Logs out a user                   | Requires a JWT |
@@ -144,7 +144,7 @@ The following shows all the API requests the web api is capabale for both entiti
 
 ```
 | METHOD |             ROUTE                             |                  OPERATION                   |       JWT      |
-|--------|-----------------------------------------------|----------------------------------------------|----------------|
+| ------ | --------------------------------------------- | -------------------------------------------- | -------------- |
 | POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user           | Requires a JWT | 
 | GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id           | Requires a JWT | 
 | GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items                  | Requires a JWT |
