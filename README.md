@@ -55,11 +55,11 @@ Please follow the following steps to install a local copy of project:<br>
 
 3. Open the project on VS Code using terminal command:<br><br> ``code .``<br>
 
-4. In the .env file add the following. Make sure to paste the appropriate information as instructed :
-<br>
+4. In the .env file add the following. Make sure to paste the appropriate information as instructed :<br>
+
 ```
-  MONGO_URI= <paste here your mongoDB uri>
-  SECRET= <paste here your secret unhashed key>
+MONGO_URI= <paste here your mongoDB uri>
+SECRET= <paste here your secret unhashed key>
 ```
 
 ---
