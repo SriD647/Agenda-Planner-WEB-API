@@ -34,9 +34,8 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 Please follow the following steps to install a local copy of project:<br>
 
-1. Copy the following HTTPs link of the remote repository:<br><br>
-
- `` https://github.com/SriD647/Week11-Homework.git``<br>
+1. Copy the following HTTPs link of the remote repository:
+<br><br>` https://github.com/SriD647/Week11-Homework.git`<br>
   
 2. Use following command on terminal to create local directory on computer at location of your choice. This directory will host the local repository.
  <br><br>``mkdir filename``<br>
@@ -56,14 +55,11 @@ Please follow the following steps to install a local copy of project:<br>
 
 3. Open the project on VS Code using terminal command:<br><br> ``code .``<br>
 
-4. In the .env file add the following. Make sure to paste the appropriate information as instructed :<br> 
-
-
- 
-  ```
+4. In the .env file add the following. Make sure to paste the appropriate information as instructed :
+<br> <br>``
   MONGO_URI= <paste here your mongoDB uri>
   SECRET= <paste here your secret unhashed key>
-  ```
+``
 <br>
 
 ---
