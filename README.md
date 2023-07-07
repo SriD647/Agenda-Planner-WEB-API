@@ -85,30 +85,34 @@ The former indicates the server is up and running and the latter indicates you a
 ---
 ## <u>**List of API requests**</u> <br>
 
-The web api can make the following API requests for the data entities. Included is the http request method, url, and inteded operation: 
+As mentioned the web api has full CRUD functionality in both of the data entities. This is made possible through the API requests that make this happen.<br>
+
+It is important to note that most API requests require the user to be logged in and authorized (via JWT authentication). A JWT token is generated only when the user `creates a user` profile and when the user `logs in`. This token enables the user to make the requests that require this authorization. <br>
+
+The following shows all the API requests the web api is capabale of for both entities. It includes, the http request method, url, intended operation, and clarifies which API requests require JWT authentication: <br>
 
 ### **Users**
 ```
-POST   | localhost:3000/users        | Creates a user
-POST   | localhost:3000/users/login  | Logins a user
-POST   | localhost:3000/users/logout | Logouts a user
-GET    | localhost:3000/:id          | Views a user profile by user id
-PUT    | localhost:3000/:id          | Updates a user profile by user id 
-DELETE | localhost:3000/:id          | Deletes a user profile by user id
+POST   | localhost:3000/users        | Creates a user                    | Creates a JWT
+POST   | localhost:3000/users/login  | Logs in a user                    | Creates a JWT
+POST   | localhost:3000/users/logout | Logs out a user                   | Requires a JWT
+GET    | localhost:3000/:id          | Views a user profile by user id   | Requires a JWT
+PUT    | localhost:3000/:id          | Updates a user profile by user id | Requires a JWT
+DELETE | localhost:3000/:id          | Deletes a user profile by user id | Requires a JWT
 ```
 
 ### **Agenda items**
-```
-POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user
-GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id
-GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items
-GET    | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date
-PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id
-DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id
-DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
+POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user           | Requires a JWT 
+GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id           | Requires a JWT 
+GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items                  | Requires a JWT
+GET    | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date | Requires a JWT
+PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id         | Requires a JWT
+DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id         | Requires a JWT
+DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user             | Requires a JWT
 ```
 
 All API requests should return a status code and a response body. Successful requests return 200 series status codes with the intended information as the response body. Unsuccessful requests return status codes of 400 series with an error message as the response body.<br>
+
 
 ---
 
@@ -131,7 +135,7 @@ Start off by choosing the HTTP method as POST. In the URL bar, paste the appropr
 
 Refer to the following screen shot:
 
-<img src="Images/Postman 1.png" alt="PM 1" style="width: 750px"><br>
+<img src="Images/Postman 1.png" alt="PM 1" style="width: 800px;height: 250px"><br>
 
 Notice the response body and status code that are returned:<br>
 
@@ -145,6 +149,8 @@ Important details:<br>
 - The agendaItems key in the user object which stores the id's of all agenda items the user creates
 - isLoggedIn key in user object is set to true, meaning the user is now logged in
 - A token key, which stores the JWT. Please copy this token as it will be used for any future API request that requires authenthorization (e.g. creating an agenda item). <br>
+
+A user object with this information will now exist in the database.
 
 ### **Creating an agenda item**
 
@@ -161,22 +167,24 @@ Start off by choosing the HTTP method as POST. In the URL bar, paste the appropr
 ```
 Refer to the following screen shot:
 
-<img src="Images/Postman 3.png" alt="PM 3" style="width: 750px"><br>
+<img src="Images/Postman 3.png" alt="PM 3" style="width: 800px;height: 250px"><br>
 
 Before clicking send, we must add the authentication token copied from previous step (create a user). This is because creating an agenda item is a request that requires the user to be authorized. Go to the authorization tab in Postman and from the type dropdown, select the option "Bearer Token". Then paste the token into the form bar. Refer to the screenshot below <br>
 
 <img src="Images/Postman 5.png" alt="PM 3"><br>
 
-One the token is pasted, click send to send the API request. Notice the response body and status code that are returned:<br>
+Once the token is pasted, click send to send the API request. Notice the response body and status code that are returned:<br>
 
 <img src="Images/Postman 4.png" alt="PM 4"><br>
 
 Important details:<br>
 
 - Status code of 200 and intended response of agenda item object, indicating a successful request
-- The title, desciption, date, startTime, and endTime which were passed into the request body 
+- The title, desciption, date, startTime, and endTime from the request body 
 - A user key which stores the id of the user this agenda item belongs to (same id from previous step)
 - An _id key which stores the unique id of this agenda item object <br>
+
+An agenda item object with this information will now exist in the database.
 
 ## **Technologies used**
 - Express 
