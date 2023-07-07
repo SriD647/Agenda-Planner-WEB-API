@@ -7,11 +7,11 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ## **<u>Trello Board</u>**<br>
 
-<p>
+<p align="center">
 <img src="Project images/Wireframe 1- Login page.png" alt="Login page" style="height: 350px; width: 350px ">
 </p><br>
 
-<p>
+<p align="center">
 <img src="Project images/Wireframe 3- Home page.png" alt="Home page" style="height: 350px; width: 350px">
 </p><br> 
 
@@ -128,11 +128,11 @@ Start off by choosing the HTTP method as POST. In the URL bar, paste the appropr
 
 Refer to the following screen shot:
 
-<img src="Images/Postman 1.png" alt="PM 1" style="width: 800px;height: 250px"><br>
+<img src="Project images/Postman 1.png" alt="PM 1" style="width: 800px;height: 250px"><br>
 
 Notice the response body and status code that are returned:<br>
 
-<img src="Images/Postman 2.png" alt="PM 2"><br>
+<img src="Project images/Postman 2.png" alt="PM 2"><br>
 
 Important details:<br>
 
@@ -160,15 +160,15 @@ Start off by choosing the HTTP method as POST. In the URL bar, paste the appropr
 ```
 Refer to the following screen shot:
 
-<img src="Images/Postman 3.png" alt="PM 3" style="width: 800px;height: 250px"><br>
+<img src="Project images/Postman 3.png" alt="PM 3" style="width: 800px;height: 250px"><br>
 
 Before clicking send, we must add the authentication token copied from previous step (create a user). This is because creating an agenda item is a request that requires the user to be authorized. Go to the authorization tab in Postman and from the type dropdown, select the option "Bearer Token". Then paste the token into the form bar. Refer to the screenshot below <br>
 
-<img src="Images/Postman 5.png" alt="PM 3"><br>
+<img src="Project images/Postman 5.png" alt="PM 3"><br>
 
 Once the token is pasted, click send to send the API request. Notice the response body and status code that are returned:<br>
 
-<img src="Images/Postman 4.png" alt="PM 4"><br>
+<img src="Project images/Postman 4.png" alt="PM 4"><br>
 
 Important details:<br>
 
