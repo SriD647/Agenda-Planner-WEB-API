@@ -182,7 +182,7 @@ An agenda item object with this information will now exist in the database.<br><
 
 ## **How to run tests**
 
-Jest and Supertest were used to test for the API endpoints for both data entities and ensure the expected behavior and correctness of the server's responses. Both successful and negative cases were tested for (29 total). To run Jest and Supertest run the following command in the terminal (please make sure you are in the project directory unit-2-project): `npm run test`<br><br>
+Jest and Supertest were used to test for the API endpoints for both data entities and ensure the expected behavior and correctness of the server's responses. Both successful and negative cases were tested for (29 total) and all resulted in a pass. To run Jest and Supertest run the following command in the terminal (please make sure you are in the project directory unit-2-project): `npm run test`<br><br>
 
 ## **How to start the app without dev mode**
 
