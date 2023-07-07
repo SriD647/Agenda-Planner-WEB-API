@@ -106,12 +106,14 @@ The following is the Mongoose schema for the agenda item data entity:<br>
 The following table, similar to above helps us understand the agenda item schema better for when we create a new agenda item.<br>
 
 ```
-title       | String | "Gym"                    | Required
-description | String | "Leg day"                | Not required
-date        | String | "2023-07-08"             | Required
-startTime   | String | "07:00 AM"               | Required 
-endTime     | String | "07:00 AM"               | Required
-user        | ObjID  | 64a208F5743acacbd6fb324a | Required
+|     KEY     |  TYPE  |        FORMAT            | REQUIRED/UNIQUE |
+|-------------|--------|--------------------------|-----------------|
+| title       | String | "Gym"                    | Required        |
+| description | String | "Leg day"                | Not required    |
+| date        | String | "2023-07-08"             | Required        |
+| startTime   | String | "07:00 AM"               | Required        |
+| endTime     | String | "07:00 AM"               | Required        |
+| user        | ObjID  | 64a208F5743acacbd6fb324a | Required        |
 ```
 <br>
 
@@ -129,7 +131,7 @@ The following shows all the API requests the web api is capabale for both entiti
 ### **Users**
 ```
 | METHOD |         ROUTE               |              OPERATION            |      JWT       |
-| ------ | --------------------------- | --------------------------------- | -------------- |
+|--------|-----------------------------|-----------------------------------|----------------|
 | POST   | localhost:3000/users        | Creates a user                    | Creates a JWT  |
 | POST   | localhost:3000/users/login  | Logs in a user                    | Creates a JWT  |
 | POST   | localhost:3000/users/logout | Logs out a user                   | Requires a JWT |
@@ -142,7 +144,7 @@ The following shows all the API requests the web api is capabale for both entiti
 
 ```
 | METHOD |             ROUTE                             |                  OPERATION                   |       JWT      |
-| ------ | --------------------------------------------- | -------------------------------------------- | -------------- |
+|--------|-----------------------------------------------|----------------------------------------------|----------------|
 | POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user           | Requires a JWT | 
 | GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id           | Requires a JWT | 
 | GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items                  | Requires a JWT |
