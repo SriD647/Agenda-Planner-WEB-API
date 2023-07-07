@@ -102,6 +102,7 @@ DELETE | localhost:3000/:id          | Deletes a user profile by user id | Requi
 ```
 
 ### **Agenda items**
+```
 POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user           | Requires a JWT 
 GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id           | Requires a JWT 
 GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items                  | Requires a JWT
