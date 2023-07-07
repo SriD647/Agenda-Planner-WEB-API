@@ -5,7 +5,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 ---
 
 
-## **<u>Wireframes and relationship diagram</u>**<br>
+## **<u>Wireframes and relationship diagrams</u>**<br>
 
 <img src="Images/Wireframe 1- Login page.png" alt="Login page" style="width: 500px; height: 500px;"><br>
 
@@ -82,6 +82,26 @@ If the app is running correctly, you will see the following messages on the term
 The former indicate the server is up and running and the latter indicates you are successfully connected to the database.
 
 ---
+## <u>**List of API requests**</u> <br>
+
+The web api can make the following API requests for the data entities. Included is the http request method, url, and inteded operation: 
+
+### **users**
+- POST     | localhost:3000/users        | Creates a user
+- POST     | localhost:3000/users/login  | Logins a user
+- POST     | localhost:3000/users/logout | Logouts a user
+- GET      | localhost:3000/:id          | Views a user profile by user id
+- PUT      | localhost:3000/:id          | Updates a user profile by user id 
+- DELETE   | localhost:3000/:id          | Deletes a user profile by user id
+
+### **Agenda items**
+- POST     | localhost:3000/agendaItems/new                | Creates a new agenda item for user
+- GET      | localhost:3000/agendaItems/:id                | Views a user agenda item by its id
+- GET      | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items
+- GET      | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date
+- PUT      | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id
+- DELETE   | localhost:3000/agendaItems/new                | Deletes a user agenda item by its id
+- DELETE   | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
 
 ## **Technologies used**
 - Express 
