@@ -79,7 +79,7 @@ The former indicates the server is up and running and the latter indicates you a
 
 It is important to satisfy the requirements of the Mongoose schema for both entities, as all data entity objects will be stored in  the data base with this blueprint. If the schema says something is required and/or must be unique this must be respected or the request will fail.
 
-The following is the Mongoose schema for the user data entity:<br>
+The user schema consists of common information required from the user to create their own profile in the database. The following is the Mongoose schema for the user data entity:<br>
 
 
 <img src="Project images/User schema.png" alt="PM 1" style="height: 250px"><br>
@@ -97,9 +97,9 @@ The following table helps us understand the user schema better when we create a 
 
 ```
 
-Please note all only the keys of name, email, password are required when creating a user document, and their values are provided through the request body. By default the value of the isLoggedIn key will be set to false and the value of the agendaItems key will be set to an empty array. The appropriate controller functions set and update these values accordingly.
+Please note only the keys of name, email,and password are required from the request body when creating a user document. By default the value of the isLoggedIn key will be set to false and the value of the agendaItems key will be set to an empty array when creating a user. The appropriate controller functions set and update these values accordingly.
 
-The following is the Mongoose schema for the agenda item data entity:<br>
+The agenda item schema consists of information needed to book a task on an agenda. It essentially consists of logical and vital task details, such the task's title, date, start time and end time. The following is the Mongoose schema for the agenda item data entity:<br>
 
 <img src="Project images/AI schema.png" alt="PM 1" style="height: 250px"><br>
 
@@ -112,12 +112,12 @@ The following table, similar to above helps us understand the agenda item schema
 | description | String | "Leg day"                | Not required    |
 | date        | String | "2023-07-08"             | Required        |
 | startTime   | String | "07:00 AM"               | Required        |
-| endTime     | String | "07:00 AM"               | Required        |
+| endTime     | String | "08:00 AM"               | Required        |
 | user        | ObjID  | 64a208F5743acacbd6fb324a | Required        |
 ```
 <br>
 
-Please note that the desciption key is optional and the only key from the table not required from the request body when creating a new item. The user key stores the value of the user's object ID. This value comes not from the request body, but from through the controller function reponsible for creating a new agenda item. It is also important to note that no two agenda items can have the same date, startTime, and endTime (as described in the relevant controller funcitons).
+Please note that the desciption key is optional and the only key from the table not required from the request body when creating a new item. The user key is also required and stores the value of the user's object ID. This value comes not from the request body, but from the controller function reponsible for creating a new agenda item. It is also important to note that no two agenda items can have the same date, startTime, and endTime (as described in the relevant controller funcitons).
 
 
 ## <u>**List of API requests**</u> <br>
