@@ -87,21 +87,25 @@ The former indicate the server is up and running and the latter indicates you ar
 The web api can make the following API requests for the data entities. Included is the http request method, url, and inteded operation: 
 
 ### **users**
-- POST     | <i>localhost:3000/users</i>        | Creates a user
-- POST     | <i>localhost:3000/users/login</i>  | Logins a user
-- POST     | <i>localhost:3000/users/logout </i> | Logouts a user
-- GET      | <i>localhost:3000/:id </i>      | Views a user profile by user id
-- PUT      | <i>localhost:3000/:id </i>   | Updates a user profile by user id 
-- DELETE   | <i>localhost:3000/:id</i>          | Deletes a user profile by user id
+```
+POST   | localhost:3000/users        | Creates a user
+POST   | localhost:3000/users/login  | Logins a user
+POST   | localhost:3000/users/logout | Logouts a user
+GET    | localhost:3000/:id          | Views a user profile by user id
+PUT    | localhost:3000/:id          | Updates a user profile by user id 
+DELETE | localhost:3000/:id          | Deletes a user profile by user id
+```
 
 ### **Agenda items**
-- POST     | <i>localhost:3000/agendaItems/new</i>                | Creates a new agenda item for user
-- GET      | <i>localhost:3000/agendaItems/:id</i>                | Views a user agenda item by its id
-- GET      | <i>localhost:3000/agendaItems/entireAgenda</i>       | Views all user agenda items
-- GET      | <i>localhost:3000/agendaItems/date/:id </i>    | Views all user agenda items on specific date
-- PUT      | <i>localhost:3000/agendaItems/:id </i>         | Updates a user agenda item by its id
-- DELETE   | <i>localhost:3000/agendaItems/new </i>               | Deletes a user agenda item by its id
-- DELETE   | <i> localhost:3000/agendaItems/entireAgenda/clear </i> | Deletes all agenda items of user
+```
+POST   | localhost:3000/agendaItems/new                | Creates a new agenda item for user
+GET    | localhost:3000/agendaItems/:id                | Views a user agenda item by its id
+GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items
+GET    | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date
+PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id
+DELETE | localhost:3000/agendaItems/new                | Deletes a user agenda item by its id
+DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
+```
 
 ## **Technologies used**
 - Express 
