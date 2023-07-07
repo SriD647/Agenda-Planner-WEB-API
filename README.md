@@ -34,7 +34,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 Please follow the following steps to install a local copy of project:<br>
 
-1. Copy the following HTTPs link of the remote repository: `https://github.com/SriD647/Week11-Homework.git`<br>
+1. Copy the following SSH link of the remote repository: `git@github.com:SriD647/Unit-2-Project.git`<br>
   
 2. Use the following command on terminal to create local directory on your computer at a location of your choice. This directory will host the local repository.
  <br><br>``mkdir filename``<br>
@@ -167,7 +167,7 @@ The following are two examples with step by step instructions and screenshots on
 
 ### **Creating a user**
 
-Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a user (as mentioned in previous section): `localhost:3000/users`. In the body tab choose `raw` and `JSON`. Copy the following code into the request body, and click send note that the request body follows the requirements of the user schema!):<br>
+Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a user (as mentioned in previous section): `localhost:3000/users`. In the body tab choose `raw` and `JSON`. Copy the following code into the request body, and click send (note that the request body follows the requirements of the user schema!):<br>
 
 ```
 {
