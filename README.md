@@ -82,7 +82,7 @@ It is important to satisfy the requirements of the Mongoose schema for both enti
 The following is the Mongoose schema for the user data entity:<br>
 
 
-<img src="Project images/User Schema.png" alt="PM 1" style="height: 250px"><br>
+<img src="Project images/User schema.png" alt="PM 1" style="height: 250px"><br>
 
 The following table helps us understand the user schema better when we create a new user. It includes the key, data type, example format, if it is required, and if it must be unique:<br>
 
