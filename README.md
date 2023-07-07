@@ -7,13 +7,13 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ## **<u>Wireframes and relationship diagrams</u>**<br>
 
-<img src="Images/Wireframe 1- Login page.png" alt="Login page" style="width: 500px; height: 500px;"><br>
+<img src="Images/Wireframe 1- Login page.png" alt="Login page" style="width: 450px; height: 400px;"><br>
 
-<img src="Images/Wireframe 3- Home page.png" alt="Home page" style="width: 500px; height: 500px;"><br>
+<img src="Images/Wireframe 3- Home page.png" alt="Home page" style="width: 450px; height: 400px;"><br>
 
-<img src="Images/Relationship diagram-1.png" alt="RD 1" style="width: 500px; height: 300px;"><br>
+<img src="Images/Relationship diagram-1.png" alt="RD 1" style="width: 450px; height: 300px;"><br>
 
-<img src="Images/Relationship diagram-2.png" alt="rd 2" style="width: 500px; height: 300px;"> <br>
+<img src="Images/Relationship diagram-2.png" alt="rd 2" style="width: 450px; height: 300px;"> <br>
 
 <p>For more wireframes and more in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
 
@@ -22,7 +22,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ## **<u>Global installations**</u>
 
-1. Ensure you have node.js installed. To check if you already do, run the following command on terminal:<br> <br>``node -v``<br><br> If not, visit the following link and download based on your OS: https://nodejs.org/en/download <br>
+1. Ensure you have node.js installed. To check if you already do, run the following command on terminal:<br> <br>``node -v``<br><br> If not, visit the following link and download based on your OS: <a href="https://nodejs.org/en/download">Node.js</a> <br>
 
 2. Ensure you have nodemon installed globally on your computer. To check this run terminal command: <br><br>
  ``nodemon -v``<br><br> 
@@ -34,8 +34,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 Please follow the following steps to install a local copy of project:<br>
 
-1. Copy the following HTTPs link of the remote repository:
-<br><br>` https://github.com/SriD647/Week11-Homework.git`<br>
+1. Copy the following HTTPs link of the remote repository: <a href="https://github.com/SriD647/Week11-Homework.git">SSD</a><br>
   
 2. Use following command on terminal to create local directory on computer at location of your choice. This directory will host the local repository.
  <br><br>``mkdir filename``<br>
@@ -100,8 +99,14 @@ PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda i
 DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id
 DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
 ```
+## **How to run API request on POSTMAN**
 
-###
+The following are step by step instructions on how to run API requests on POSTMAN. Please visit their website for instructions on how to use browser edition and/or desktop edition:  <a href="https://www.postman.com/">POSTMAN</a>
+
+
+### **Creating a user**
+
+1. 
 
 
 ## **Technologies used**
