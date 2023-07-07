@@ -114,6 +114,7 @@ All API requests should return a status code and a response body. Successful req
 The following are two examples with step by step instructions and screenshots on how to run API requests on POSTMAN. Please visit their website for instructions on how to use browser edition and/or desktop edition:  <a href="https://www.postman.com/">POSTMAN</a>
 
 
+
 ### **Creating a user**
 
 Start off by choosing the HTTP method as POST. In the URL bar, paste the appropriate URL for creating a user (as mentioned in previous section): `localhost:3000/users`. In the body tab choose `raw` and `JSON`. Copy the following code into the request body, and click send. Note that the request body follows the requirements of the user schema.:<br>
@@ -177,7 +178,17 @@ Important details:<br>
 - A user key which stores the id of the user this agenda item belongs to (same id from previous step)
 - An _id key which stores the unique id of this agenda item object <br>
 
-An agenda item object with this information will now exist in the database.
+An agenda item object with this information will now exist in the database.<br><br>
+
+## **How to run tests**
+
+Jest and Supertest were used to test for the API endpoints for both data entities and ensure the expected behavior and correctness of the server's responses. Both successful and negative cases were tested for (29 total). To run Jest and Supertest run the following command in the terminal (please make sure you are in the project directory unit-2-project): `npm run test`<br><br>
+
+## **How to start the app without dev mode**
+
+To start the app without dev mode, once again make sure you are in the right directory (unit-2-project) and run the following terminal command: `npm start`
+
+
 
 ## **Technologies used**
 - Express 
