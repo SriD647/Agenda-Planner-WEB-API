@@ -22,7 +22,7 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ## **<u>Global installations**</u>
 
-1. Ensure you have node.js installed. To check if you already do, run the following command on terminal:<br> <br>``node -v``<br><br> If not, visit the following link and download based on your OS:<br> https://nodejs.org/en/download <br><br>
+1. Ensure you have node.js installed. To check if you already do, run the following command on terminal:<br> <br>``node -v``<br><br> If not, visit the following link and download based on your OS: https://nodejs.org/en/download <br>
 
 2. Ensure you have nodemon installed globally on your computer. To check this run terminal command: <br><br>
  ``nodemon -v``<br><br> 
@@ -34,11 +34,10 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 Please follow the following steps to install a local copy of project:<br>
 
-1. Copy the following HTTPs link of the remote repository:<br>
+1. Copy the following HTTPs link of the remote repository:<br><br>
 
-   `` https://github.com/SriD647/Week11-Homework.git``<br>
+ `` https://github.com/SriD647/Week11-Homework.git``<br>
   
-
 2. Use following command on terminal to create local directory on computer at location of your choice. This directory will host the local repository.
  <br><br>``mkdir filename``<br>
  
@@ -58,20 +57,20 @@ Please follow the following steps to install a local copy of project:<br>
 3. Open the project on VS Code using terminal command:<br><br> ``code .``<br>
 
 4. In the .env file add the following. Make sure to paste the appropriate information as instructed :<br> 
-<br>
 
 
-```
-MONGO_URI= <paste here your mongoDB uri>
-SECRET= <paste here your secret unhashed key>
-```
+ 
+  ```
+  MONGO_URI= <paste here your mongoDB uri>
+  SECRET= <paste here your secret unhashed key>
+  ```
 <br>
 
 ---
 
 ## <u>**Running the application in dev mode**</u> <br>
 
-Making sure we are still in the root directory of the project please run the following terminal command:<br><br>` npm run dev`<br><br>
+Making sure we are still in the root directory of the project please run the following terminal command:<br><br>` npm run dev`<br>
 
 If the app is running correctly, you will see the following messages on the terminal:<br>
 
@@ -86,7 +85,7 @@ The former indicate the server is up and running and the latter indicates you ar
 
 The web api can make the following API requests for the data entities. Included is the http request method, url, and inteded operation: 
 
-### **users**
+### **Users**
 ```
 POST   | localhost:3000/users        | Creates a user
 POST   | localhost:3000/users/login  | Logins a user
@@ -103,9 +102,12 @@ GET    | localhost:3000/agendaItems/:id                | Views a user agenda ite
 GET    | localhost:3000/agendaItems/entireAgenda       | Views all user agenda items
 GET    | localhost:3000/agendaItems/date/:id           | Views all user agenda items on specific date
 PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda item by its id
-DELETE | localhost:3000/agendaItems/new                | Deletes a user agenda item by its id
+DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id
 DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
 ```
+
+###
+
 
 ## **Technologies used**
 - Express 
