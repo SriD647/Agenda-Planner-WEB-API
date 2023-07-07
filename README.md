@@ -7,12 +7,25 @@ Agenda planner is simple web API that allows a user to plan their day by creatin
 
 ## **<u>Wireframes and relationship diagrams</u>**<br>
 
-<img src="Images/Wireframe 1- Login page.png" alt="Login page" style="width: 450px; height: 400px;"><br>
+<p>
+ <img src="Images/Wireframe 1- Login page.png" alt="Login page" style="width: 450px; height: 400px;">
+  <img src="Images/Wireframe 3- Home page.png" alt="Home page" style="width: 450px; height: 400px;">
+</p>
 
-<img src="Images/Wireframe 3- Home page.png" alt="Home page" style="width: 450px; height: 400px;"><br>
 
-<img src="Images/Relationship diagram-1.png" alt="RD 1" style="width: 450px; height: 300px;"><br>
+<p align="center">
 
+</p><br>
+
+<p align="center">
+
+</p><br> 
+
+<p align="center">
+<img src="Images/Relationship diagram-1.png" alt="RD 1" style="width: 450px; height: 300px;">
+</p><br>
+
+<p align="center">
 <img src="Images/Relationship diagram-2.png" alt="rd 2" style="width: 450px; height: 300px;"> <br>
 
 <p>For more wireframes and more in-depth project journey details, please refer to my <a href="https://trello.com/b/nmL8ffzH/unit-2-project-trello-board">Trello board</a>.</p>
@@ -72,7 +85,7 @@ If the app is running correctly, you will see the following messages on the term
 
 ``Mongo is lit!``<br>
 
-The former indicate the server is up and running and the latter indicates you are successfully connected to the database.
+The former indicates the server is up and running and the latter indicates you are successfully connected to the database.
 
 ---
 ## <u>**List of API requests**</u> <br>
@@ -99,9 +112,12 @@ PUT    | localhost:3000/agendaItems/:id                | Updates a user agenda i
 DELETE | localhost:3000/agendaItems/:id                | Deletes a user agenda item by its id
 DELETE | localhost:3000/agendaItems/entireAgenda/clear | Deletes all agenda items of user
 ```
-## **How to run API request on POSTMAN**
 
-The following are step by step instructions on how to run API requests on POSTMAN. Please visit their website for instructions on how to use browser edition and/or desktop edition:  <a href="https://www.postman.com/">POSTMAN</a>
+All API requests should return a status code and a response body. Successful requests return 200 series status codes with the intended information as the response body. Unsuccessful requests return status codes of 400 series with an error message as the response body.
+
+## **Examples of how to run API request on POSTMAN**
+
+The following are two examples with step by step instructions on how to run API requests on POSTMAN. Please visit their website for instructions on how to use browser edition and/or desktop edition:  <a href="https://www.postman.com/">POSTMAN</a>
 
 
 ### **Creating a user**
