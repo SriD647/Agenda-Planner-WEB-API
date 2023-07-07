@@ -87,11 +87,13 @@ The following is the Mongoose schema for the user data entity:<br>
 The following table helps us understand the user schema better when we create a new user object. It includes the key, data characteristic, example format, if it is required, and if it must be unique:<br>
 
 ```
-Name        | String           | "Firstname Lastname" | Required
-Email       | String           | "abc@gmail.com"      | Required, must be unique
-Password    | String           | "123a"               | Required
-isLoggedIn  | Boolean          | True or False        | Not required
-agendaItems | [] of ObjectId's | [ObID1, ObID2]       | Not required
+|    KEY      |      TYPE        |      FORMAT          |     REQUIRED/UNIQUE      |
+|-------------|------------------|----------------------|--------------------------|
+| Name        | String           | "Firstname Lastname" | Required                 |
+| Email       | String           | "abc@gmail.com"      | Required, must be unique |
+| Password    | String           | "123a"               | Required                 |
+| isLoggedIn  | Boolean          | True or False        | Not required             |
+| agendaItems | [] of ObjectId's | [ObID1, ObID2]       | Not required             |
 
 ```
 
@@ -126,18 +128,17 @@ The following shows all the API requests the web api is capabale for both entiti
 
 ### **Users**
 ```
-POST   | localhost:3000/users        | Creates a user                    | Creates a JWT
-POST   | localhost:3000/users/login  | Logs in a user                    | Creates a JWT
-POST   | localhost:3000/users/logout | Logs out a user                   | Requires a JWT
-GET    | localhost:3000/:id          | Views a user profile by user id   | Requires a JWT
-PUT    | localhost:3000/:id          | Updates a user profile by user id | Requires a JWT
-DELETE | localhost:3000/:id          | Deletes a user profile by user id | Requires a JWT
+| METHOD |         ROUTE               |              OPERATION            |      JWT       |
+| ------ | --------------------------- | --------------------------------- | -------------- |
+| POST   | localhost:3000/users        | Creates a user                    | Creates a JWT  |
+| POST   | localhost:3000/users/login  | Logs in a user                    | Creates a JWT  |
+| POST   | localhost:3000/users/logout | Logs out a user                   | Requires a JWT |
+| GET    | localhost:3000/:id          | Views a user profile by user id   | Requires a JWT |
+| PUT    | localhost:3000/:id          | Updates a user profile by user id | Requires a JWT |
+| DELETE | localhost:3000/:id          | Deletes a user profile by user id | Requires a JWT |
 ```
 
 ### **Agenda items**
-
-
-
 
 ```
 | METHOD |             ROUTE                             |                  OPERATION                   |       JWT      |
