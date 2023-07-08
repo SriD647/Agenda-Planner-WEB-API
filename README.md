@@ -234,13 +234,7 @@ An agenda item object as we see in the response body will now exist in the datab
 
 Jest and Supertest were used to test for the API endpoints for both data entities and to ensure the expected behavior and correctness of the server's responses. Both successful and negative cases were tested for (29 total) and all resulted in a pass. To run Jest and Supertest run the following command in the terminal (please make sure you are in the project directory unit-2-project): `npm run test`<br>
 
-Artillery was chosen for load testing to assess how well the application can handle its expected workload and to help determine the system's throughput. The test includes both POST and GET methods from a data entity. My test results had positive results, as all requests returned a status code of 200. In addition, the speed of thr response time was relatively fast. To run artillery, run `npm run load` in terminal, being sure to be in the right folder.
-
-
-
-
-
-<br><br>
+Artillery was chosen for load testing to assess how well the application can handle its expected workload and to help determine the system's throughput. The test includes both POST and GET methods from a data entity. My test results had positive results, as all requests returned a status code of 200. In addition, the speed of thr response time was relatively fast. To run artillery, run `npm run load` in terminal, being sure to be in the right folder.<br>
 
 ## **How to start the app without dev mode**
 
