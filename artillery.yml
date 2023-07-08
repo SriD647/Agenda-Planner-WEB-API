@@ -10,10 +10,10 @@ scenarios:
       - post:
           url: "/users/login"
           json:
-            email: "sri@gmail.com"
+            email: "test.bob@gmail.com"
             password: "123a"
 
   - name: "GET user profile"
     flow:
       - get:
-          url: "/users/64a608c0743acacbd6fb3243"
+          url: "/users/64a97497f9db66c2e3d30c3a"
