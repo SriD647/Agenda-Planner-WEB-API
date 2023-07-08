@@ -1,6 +1,6 @@
 # **Welcome to Agenda Planner**
 
-Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. Hence, this API has full CRUD functionality on both data entities (agenda items and user profile). 
+Agenda planner is simple web API that allows a user to plan their day by creating, updating, viewing, and deleting tasks (agenda items) on a date + time of their choice. In addition, the user is able to sign up, login, logout, update  their profile, and delete their profile. Hence, this API has full CRUD functionality on both data entities (agenda items and user). 
 
 ---
 
@@ -79,7 +79,7 @@ The former indicates the server is up and running and the latter indicates you a
 
 It is important to satisfy the requirements of the Mongoose schema for both entities, as all data entity objects will be stored in  the data base with this blueprint. If the schema says something is required and/or must be unique this must be respected or the request will fail.
 
-The user schema consists of common information required from the user to create their own profile in the database. The following is the Mongoose schema for the user data entity:<br>
+The user schema consists of common information required from the user to create their own user object in the database. The following is the Mongoose schema for the user data entity:<br>
 
 
 <img src="Project images/User schema.png" alt="PM 1" style="height: 250px"><br>
@@ -97,7 +97,7 @@ The following table helps us understand the user schema better when we create a 
 
 ```
 
-Please note only the keys of name, email,and password are required from the request body when creating a user document. By default the value of the isLoggedIn key will be set to false and the value of the agendaItems key will be set to an empty array when creating a user. The appropriate controller functions set and update these values accordingly.
+Please note only the keys of name, email, and password are required from the request body when creating a user document. By default the value of the isLoggedIn key will be set to true and the value of the agendaItems key will be set to an empty array when creating a user. The appropriate controller functions set and update these values accordingly.
 
 The agenda item schema consists of information needed to book a task on an agenda. It essentially consists of logical and vital task details, such the task's title, date, start time and end time. The following is the Mongoose schema for the agenda item data entity:<br>
 
@@ -126,7 +126,7 @@ As mentioned the web api has full CRUD functionality in both of the data entitie
 
 It is important to note that most API requests require the user to be logged in and authorized (via JWT authentication). A JWT token is generated only when the user `creates a user` profile and when the user `logs in`. This token then enables the user to make the requests that require this authorization. <br>
 
-The following shows all the API requests the web api is capabale for both entities. It includes, the http request method, url, intended operation, and clarifies if the request creates or requires JWT: <br>
+The following shows all the API requests the web api is capabale for both entities. It includes the http request method, url, intended operation, and clarifies if the request creates or requires JWT: <br>
 
 ### **Users**
 ```
