@@ -250,7 +250,7 @@ To start the app without dev mode, once again make sure you are in the right dir
 - MongoDB (datebase)
 - Bcrypt (password encyption) & Jsonwebtoken (token authentication)
 - Jest & Supertest (API endpoint testing)
-- Artillerty (load testing)
+- Artillery (load testing)
 - POSTMAN (manual testing)
 - Excalidraw (wireframes) and Trello (project journey)
 
